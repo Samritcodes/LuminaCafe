@@ -102,9 +102,9 @@
 
     // 4) 3D Spatial Mouse Parallax Tilt
     function initSpatialTilt() {
-        const constellation = document.getElementById('spatialConstellation');
+        const stage = document.getElementById('graphicStageContainer') || document.getElementById('spatialConstellation');
         const hero = document.getElementById('hero-sanctuary');
-        if (!constellation || !hero || reduceMotion || window.innerWidth <= 900) return;
+        if (!stage || !hero || reduceMotion || window.innerWidth <= 900) return;
 
         let targetRX = 0;
         let targetRY = 0;
@@ -116,8 +116,8 @@
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-            targetRX = -y * 12; // tilt X
-            targetRY = x * 15;  // tilt Y
+            targetRX = -y * 10; // tilt X
+            targetRY = x * 12;  // tilt Y
         });
 
         hero.addEventListener('mouseleave', () => {
@@ -129,7 +129,7 @@
             currentRX += (targetRX - currentRX) * 0.08;
             currentRY += (targetRY - currentRY) * 0.08;
 
-            constellation.style.transform = `perspective(1200px) rotateX(${currentRX.toFixed(2)}deg) rotateY(${currentRY.toFixed(2)}deg)`;
+            stage.style.transform = `perspective(1200px) rotateX(${currentRX.toFixed(2)}deg) rotateY(${currentRY.toFixed(2)}deg)`;
             requestAnimationFrame(renderTilt);
         }
         requestAnimationFrame(renderTilt);
@@ -155,17 +155,19 @@
         requestAnimationFrame(step);
     }
 
-    // 6) The Bamboo Steamer & Dynamic Dumpling Spill Spatial Transition (Fully Reversible)
-    const steamer = document.getElementById('welcome-steamer-element') || document.getElementById('welcome-cup-element');
+    // 6) Full-Screen Graphic Bamboo Steamer & Dynamic Spill Engine
+    const steamer = document.getElementById('welcome-steamer-element');
     const lid = document.getElementById('steamer-lid-element');
     const steam = document.getElementById('steamerSteam');
-    const card1 = document.querySelector('.dumpling-card-1') || document.querySelector('.spatial-card-tl');
-    const card2 = document.querySelector('.dumpling-card-2') || document.querySelector('.spatial-card-tr');
-    const card3 = document.querySelector('.dumpling-card-3') || document.querySelector('.spatial-card-bl');
-    const card4 = document.querySelector('.dumpling-card-4') || document.querySelector('.spatial-card-br');
+    const preview = document.getElementById('cornerPreview');
+    const leftCol = document.querySelector('.graphic-editorial-col.left-col');
+    const rightCol = document.querySelector('.graphic-editorial-col.right-col');
+    const indicator = document.querySelector('.graphic-scroll-indicator');
+    const card1 = document.querySelector('.spill-card-1');
+    const card2 = document.querySelector('.spill-card-2');
+    const card3 = document.querySelector('.spill-card-3');
+    const card4 = document.querySelector('.spill-card-4');
     const sauce = document.getElementById('spillSauce');
-    const garnish = document.getElementById('spillGarnish');
-    const hint = document.querySelector('.steamer-scroll-hint');
     const targetSection = document.getElementById('atmospheres-loop');
 
     let isDragging = false;
@@ -182,98 +184,104 @@
         }
 
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const maxScroll = 620;
+        const maxScroll = 550;
         const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
 
         if (progress > 0) {
-            // Central Bamboo Steamer Tilts Forward to Spill
-            const tiltX = 44 * progress;
-            const tiltZ = -14 * progress;
-            const posY = progress * 190;
-            const scale = 1 + progress * 0.14;
-            const op = Math.max(0, 1 - Math.pow(progress, 1.35));
+            // 1. Giant Steamer Bucket Tilts & Tumbles Forward
+            const tiltX = 65 * progress;
+            const tiltZ = -20 * progress;
+            const posY = progress * 240;
+            const scale = 1 + progress * 0.20;
+            const opacity = Math.max(0, 1 - Math.pow(progress, 1.35));
 
             steamer.style.transform = `translate3d(0, ${posY}px, 0) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) scale(${scale})`;
-            steamer.style.opacity = op;
+            steamer.style.opacity = opacity;
 
-            // Bamboo Lid flips and slides back dynamically
+            // 2. Bamboo Lid shoots off into the distance
             if (lid) {
-                lid.style.transform = `translate3d(${progress * 95}px, ${-progress * 135}px, 70px) rotate(${progress * 40}deg) rotateX(${progress * 25}deg)`;
-                lid.style.opacity = Math.max(0, 1 - progress * 1.6);
+                lid.style.transform = `translate3d(${progress * 180}px, ${-progress * 220}px, 120px) rotate(${progress * 55}deg) rotateX(${progress * 30}deg)`;
+                lid.style.opacity = Math.max(0, 1 - progress * 1.8);
             }
 
-            // Fragrant Steam Wisps disperse
+            // 3. Fragrant Steam disperses
             if (steam) {
-                steam.style.opacity = Math.max(0, 1 - progress * 2.2);
+                steam.style.opacity = Math.max(0, 1 - progress * 2.5);
             }
 
-            // 4 Dumpling Flight Cards Spill Across Screen Margins (Ballistic 3D Flight Paths)
-            const cardOpacity = Math.max(0, 1 - Math.pow(progress, 1.35));
+            // 4. Corner Preview dish slides away
+            if (preview) {
+                preview.style.transform = `translate(-50%, -50%) scale(${0.85 + progress * 0.25}) translate3d(${progress * 90}px, ${progress * 70}px, 0)`;
+                preview.style.opacity = Math.max(0, 1 - progress * 1.6);
+            }
+
+            // 5. Left & Right Editorial Columns dissolve outward
+            if (leftCol) {
+                leftCol.style.transform = `translate3d(${-progress * 140}px, 0, 0)`;
+                leftCol.style.opacity = Math.max(0, 1 - progress * 1.7);
+            }
+            if (rightCol) {
+                rightCol.style.transform = `translate3d(${progress * 140}px, 0, 0)`;
+                rightCol.style.opacity = Math.max(0, 1 - progress * 1.7);
+            }
+            if (indicator) {
+                indicator.style.opacity = Math.max(0, 1 - progress * 3);
+            }
+
+            // 6. THE DUMPLING SPILL (4 Dishes Spill Across Screen & Floor)
+            const spillProgress = Math.min(1, Math.max(0, (progress - 0.04) / 0.75));
+            const spillOp = spillProgress < 0.65 ? spillProgress * 1.6 : Math.max(0, (1 - spillProgress) * 2.8);
 
             if (card1) {
-                // Truffle Xiao Long Bao: Launches towards top-left
-                const dx1 = -progress * 260;
-                const dy1 = -progress * 130 + (progress * progress * 35);
-                const rot1 = -progress * 18;
-                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 80px) rotate(${rot1}deg) scale(${1 + progress * 0.10})`;
-                card1.style.opacity = cardOpacity;
+                const dx1 = -spillProgress * 320;
+                const dy1 = -spillProgress * 140 + (spillProgress * spillProgress * 90);
+                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 100px) rotate(${-spillProgress * 22}deg) scale(${1 + spillProgress * 0.15})`;
+                card1.style.opacity = spillOp;
             }
-
             if (card2) {
-                // Crisp Golden Gyoza: Bursts towards top-right
-                const dx2 = progress * 270;
-                const dy2 = -progress * 120 + (progress * progress * 30);
-                const rot2 = progress * 18;
-                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 90px) rotate(${rot2}deg) scale(${1 + progress * 0.10})`;
-                card2.style.opacity = cardOpacity;
+                const dx2 = spillProgress * 340;
+                const dy2 = -spillProgress * 130 + (spillProgress * spillProgress * 80);
+                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 110px) rotate(${spillProgress * 20}deg) scale(${1 + spillProgress * 0.15})`;
+                card2.style.opacity = spillOp;
             }
-
             if (card3) {
-                // Sichuan Chili Wontons: Tumbles across floor bottom-left
-                const dx3 = -progress * 230;
-                const dy3 = progress * 150;
-                const rot3 = -progress * 12;
-                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 60px) rotate(${rot3}deg) scale(${1 + progress * 0.08})`;
-                card3.style.opacity = cardOpacity;
+                const dx3 = -spillProgress * 280;
+                const dy3 = spillProgress * 200;
+                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 70px) rotate(${-spillProgress * 15}deg) scale(${1 + spillProgress * 0.12})`;
+                card3.style.opacity = spillOp;
             }
-
             if (card4) {
-                // Steamed Shiitake Bao: Rolls across floor bottom-right
-                const dx4 = progress * 240;
-                const dy4 = progress * 160;
-                const rot4 = progress * 14;
-                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 70px) rotate(${rot4}deg) scale(${1 + progress * 0.08})`;
-                card4.style.opacity = cardOpacity;
+                const dx4 = spillProgress * 290;
+                const dy4 = spillProgress * 210;
+                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 80px) rotate(${spillProgress * 18}deg) scale(${1 + spillProgress * 0.12})`;
+                card4.style.opacity = spillOp;
             }
-
-            // Spilling Accents: Chili Oil Dish & Garnishes
             if (sauce) {
-                sauce.style.transform = `translate3d(${-progress * 150}px, ${progress * 90}px, 30px)`;
-                sauce.style.opacity = Math.max(0, 1 - progress * 1.5);
-            }
-            if (garnish) {
-                garnish.style.transform = `scale(${1 + progress * 0.4})`;
-                garnish.style.opacity = Math.max(0, 1 - progress * 1.6);
-            }
-            if (hint) {
-                hint.style.opacity = Math.max(0, 1 - progress * 2.5);
+                sauce.style.transform = `translate3d(${-spillProgress * 180}px, ${spillProgress * 120}px, 40px) scale(${1 + spillProgress * 0.2})`;
+                sauce.style.opacity = spillOp;
             }
         } else {
-            // 100% Fully Restored when user scrolls back to the top
+            // 100% Fully Restored when user scrolls back to top
             steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1)';
             steamer.style.opacity = '1';
 
             if (lid) { lid.style.transform = 'none'; lid.style.opacity = '1'; }
             if (steam) { steam.style.opacity = '1'; }
+            if (preview) { preview.style.transform = 'translate(-50%, -50%) scale(0.85)'; preview.style.opacity = '1'; }
+            if (leftCol) { leftCol.style.transform = 'none'; leftCol.style.opacity = '1'; }
+            if (rightCol) { rightCol.style.transform = 'none'; rightCol.style.opacity = '1'; }
+            if (indicator) { indicator.style.opacity = '1'; }
 
-            if (card1) { card1.style.transform = 'translate3d(0, 0, 50px) rotate(-3deg)'; card1.style.opacity = '1'; }
-            if (card2) { card2.style.transform = 'translate3d(0, 0, 65px) rotate(3deg)'; card2.style.opacity = '1'; }
-            if (card3) { card3.style.transform = 'translate3d(0, 0, 45px) rotate(-2deg)'; card3.style.opacity = '1'; }
-            if (card4) { card4.style.transform = 'translate3d(0, 0, 70px) rotate(2deg)'; card4.style.opacity = '1'; }
-
-            if (sauce) { sauce.style.transform = 'none'; sauce.style.opacity = '1'; }
-            if (garnish) { garnish.style.transform = 'none'; garnish.style.opacity = '1'; }
-            if (hint) { hint.style.opacity = '1'; }
+            [card1, card2, card3, card4].forEach((c) => {
+                if (c) {
+                    c.style.opacity = '0';
+                    c.style.transform = 'none';
+                }
+            });
+            if (sauce) {
+                sauce.style.opacity = '0';
+                sauce.style.transform = 'none';
+            }
         }
 
         ticking = false;
@@ -314,7 +322,7 @@
             endDrag();
             const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
             gentleScrollTo(targetY, 1050);
-            window.showToast?.('🥢 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
+            window.showToast?.('🥟 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
         }
     }
 
@@ -340,7 +348,7 @@
 
             const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
             gentleScrollTo(targetY, 1050);
-            window.showToast?.('🥢 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
+            window.showToast?.('🥟 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
         }, 180);
     }
 

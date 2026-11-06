@@ -58,8 +58,8 @@ if (!isset($activeNav)) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Custom CSS with Cache Buster -->
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">
 </head>
 <body class="text-stone-900 min-h-screen flex flex-col justify-between">
     <!-- Top Announcement Bar -->

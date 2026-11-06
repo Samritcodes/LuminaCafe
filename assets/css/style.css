@@ -578,114 +578,192 @@ h1, h2, h3, .font-heading {
     contain: layout;
 }
 
-/* 3D Spatial Hero Showcase */
-.spatial-hero-stage {
-    position: relative;
-    min-height: 95vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 20px 50px;
-    background: radial-gradient(circle at 50% 38%, #FFFFFF 0%, #FAF8F5 55%, #F4EFEA 100%);
-    overflow: hidden;
-    perspective: 1200px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.spatial-constellation {
+/* ==========================================================================
+   Full-Screen High-Fashion Graphic Hero Stage (Reference Site Architecture)
+   ========================================================================== */
+.graphic-hero-viewport {
     position: relative;
     width: 100%;
-    max-width: 1080px;
-    height: 480px;
-    margin: 20px auto 0;
+    min-height: 100vh;
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    transition: transform 0.15s ease-out;
+    flex-direction: column;
+    justify-content: space-between;
+    perspective: 1400px;
+    background: #8C350F;
 }
 
-.spatial-cup-stage,
-.steamer-bucket-stage {
-    position: relative;
-    width: clamp(260px, 32vw, 360px);
-    height: clamp(260px, 32vw, 360px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    z-index: 12;
-}
-
-.cup-aura-glow,
-.steamer-aura-glow {
+/* 1. Fixed Visual Layer with Rich Graphic Gradient */
+.fixed-visual-layer {
     position: absolute;
-    inset: -30px;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8C350F 0%, #C25E00 45%, #7C2D12 100%);
+    transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+/* 2. Radial Dark Vignette Overlay (Leaves center glowing and edges cinematic) */
+.hero-vignette-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 25%, rgba(0, 0, 0, 0.50) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 3. Main Graphic Stage Container */
+.graphic-stage-container {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    margin: auto;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    perspective: 1200px;
+    min-height: calc(100vh - 160px);
+}
+
+/* Left & Right Editorial Columns */
+.graphic-editorial-col {
+    position: relative;
+    z-index: 25;
+}
+
+.graphic-editorial-col.left-col {
+    max-width: 460px;
+}
+
+.editorial-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #FDE68A;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.sanctuary-feature-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(0, 0, 0, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 12px 18px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+    transition: transform 0.25s ease, background 0.25s ease;
+    user-select: none;
+    width: 290px;
+}
+
+.sanctuary-feature-card:hover {
+    transform: translateX(-4px);
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   Centerpiece Giant Steamer Bucket (State: MAIN)
+   ========================================================================== */
+.steamer-centerpiece-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(340px, 38vw, 500px);
+    height: clamp(340px, 38vw, 500px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    transform-style: preserve-3d;
+}
+
+.steamer-glow-aura {
+    position: absolute;
+    inset: -40px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(217, 119, 6, 0.22) 0%, rgba(245, 158, 11, 0.08) 55%, transparent 75%);
-    filter: blur(20px);
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.38) 0%, rgba(217, 119, 6, 0.15) 50%, transparent 75%);
+    filter: blur(35px);
     pointer-events: none;
     z-index: 1;
 }
 
-/* Bamboo Steamer Basket */
-.spatial-cup,
-.steamer-basket {
+.steamer-main-bucket {
     position: relative;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     cursor: grab;
     z-index: 10;
-    filter: drop-shadow(0 28px 50px rgba(60, 30, 10, 0.25));
-    transform: translateZ(0);
+    border: 10px solid #C49A6C;
+    box-shadow: 
+        0 40px 80px rgba(40, 10, 0, 0.60),
+        inset 0 0 0 5px #78481E,
+        inset 0 0 35px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
     will-change: transform;
     user-select: none;
     -webkit-user-select: none;
-    transform-style: preserve-3d;
-    border: 7px solid #C49A6C;
-    box-shadow: 
-        inset 0 0 0 4px #8B5A2B,
-        inset 0 0 25px rgba(0, 0, 0, 0.25),
-        0 12px 30px rgba(100, 50, 15, 0.22);
 }
 
-.spatial-cup:active,
-.steamer-basket:active {
+.steamer-main-bucket:active {
     cursor: grabbing;
 }
 
 .steamer-rim-ring {
     position: absolute;
-    inset: 4px;
+    inset: 6px;
     border-radius: 50%;
-    border: 1.5px dashed rgba(245, 222, 179, 0.6);
+    border: 2px dashed rgba(254, 243, 199, 0.5);
     pointer-events: none;
     z-index: 12;
 }
 
-.steamer-center-badge {
+.steamer-brass-badge {
     position: absolute;
-    bottom: 18px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.80);
+    border: 1px solid rgba(251, 191, 36, 0.6);
+    backdrop-filter: blur(6px);
+    color: #FDE68A;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 5px 14px;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     z-index: 15;
     pointer-events: none;
 }
 
-/* Steamer Lid that flips/slides back on scroll */
-.steamer-lid {
+.steamer-flying-lid {
     position: absolute;
-    top: -15px;
-    right: -25px;
-    width: 130px;
-    height: 130px;
+    top: -20px;
+    right: -30px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #E2BE8A 0%, #BA8952 70%, #8C5D2A 100%);
-    border: 4px solid #78481E;
-    box-shadow: 0 16px 30px rgba(50, 25, 10, 0.25), inset 0 0 0 2px #E8CA9D;
-    z-index: 11;
+    border: 5px solid #6E3F18;
+    box-shadow: 0 20px 40px rgba(30, 10, 0, 0.35), inset 0 0 0 3px #F5E0B8;
+    z-index: 12;
     pointer-events: none;
     will-change: transform, opacity;
     transition: transform 0.15s ease-out;
@@ -708,11 +786,11 @@ h1, h2, h3, .font-heading {
 /* Rising Fragrant Steam Particles */
 .steamer-steam {
     position: absolute;
-    top: -40px;
+    top: -45px;
     left: 50%;
     transform: translateX(-50%);
-    width: 140px;
-    height: 80px;
+    width: 160px;
+    height: 90px;
     pointer-events: none;
     z-index: 20;
     display: flex;
@@ -720,9 +798,9 @@ h1, h2, h3, .font-heading {
 }
 
 .steam-wisp {
-    width: 24px;
-    height: 60px;
-    background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 70%);
+    width: 26px;
+    height: 65px;
+    background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0) 70%);
     filter: blur(8px);
     border-radius: 50%;
     animation: steamRise 3.5s infinite ease-in-out;
@@ -734,114 +812,125 @@ h1, h2, h3, .font-heading {
 
 @keyframes steamRise {
     0% { transform: translateY(15px) scale(0.7); opacity: 0; }
-    40% { opacity: 0.6; }
-    100% { transform: translateY(-45px) scale(1.4); opacity: 0; }
+    40% { opacity: 0.65; }
+    100% { transform: translateY(-50px) scale(1.4); opacity: 0; }
 }
 
-/* 4 Spilling Dumpling Flight Cards */
-.spatial-card,
-.dumpling-flight-card {
+/* ==========================================================================
+   Corner Dish Preview (State: PREVIEW - Signature Reference Site Feature)
+   ========================================================================== */
+.corner-dish-preview {
     position: absolute;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(220, 195, 160, 0.7);
-    border-radius: 20px;
-    padding: 12px 16px;
-    box-shadow: 0 16px 38px rgba(50, 25, 10, 0.09);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 320px;
-    max-width: 90vw;
-    z-index: 15;
-    will-change: transform, opacity;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    top: 86%;
+    left: 90%;
+    transform: translate(-50%, -50%) scale(0.85);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(251, 191, 36, 0.3);
+    cursor: pointer;
+    z-index: 25;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
     user-select: none;
 }
 
-.spatial-card:hover,
-.dumpling-flight-card:hover {
-    box-shadow: 0 22px 48px rgba(217, 119, 6, 0.20);
-    border-color: rgba(217, 119, 6, 0.55);
-    transform: scale(1.04) !important;
+.corner-dish-preview:hover {
+    transform: translate(-50%, -50%) scale(1.05) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(251, 191, 36, 0.6);
 }
 
-.spatial-card-tl,
-.dumpling-card-1 {
-    top: 30px;
-    left: 2%;
-    transform: translateZ(50px) rotate(-3deg);
+.preview-hover-tag {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: #000000;
+    border: 1px solid rgba(251, 191, 36, 0.6);
+    padding: 3px 10px;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.spatial-card-tr,
-.dumpling-card-2 {
-    top: 25px;
-    right: 2%;
-    transform: translateZ(65px) rotate(3deg);
+/* ==========================================================================
+   Spilling Dumpling Flight Cards (Triggered on Scroll)
+   ========================================================================== */
+.spill-flight-cluster {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 22;
 }
 
-.spatial-card-bl,
-.dumpling-card-3 {
-    bottom: 35px;
-    left: 1%;
-    transform: translateZ(45px) rotate(-2deg);
+.dumpling-flight-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(251, 191, 36, 0.5);
+    border-radius: 20px;
+    padding: 12px 18px;
+    box-shadow: 0 20px 45px rgba(30, 10, 0, 0.22);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 290px;
+    opacity: 0;
+    pointer-events: auto;
+    will-change: transform, opacity;
+    transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-.spatial-card-br,
-.dumpling-card-4 {
-    bottom: 25px;
-    right: 1%;
-    transform: translateZ(70px) rotate(2deg);
-}
-
-.spatial-thumb,
-.dumpling-thumb {
-    width: 54px;
-    height: 54px;
+.spill-thumb {
+    width: 52px;
+    height: 52px;
     border-radius: 14px;
     object-fit: cover;
     flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.spill-add-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    background: var(--amber-light);
-    border: 1px solid rgba(217, 119, 6, 0.3);
-    color: var(--amber-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.spill-card-1 {
+    top: 15%;
+    left: 8%;
+    transform: translate3d(0, 0, 60px) rotate(-8deg);
 }
 
-.spill-add-btn:hover {
-    background: var(--amber-primary);
-    color: #FFFFFF;
-    transform: scale(1.1);
+.spill-card-2 {
+    top: 14%;
+    right: 8%;
+    transform: translate3d(0, 0, 70px) rotate(8deg);
 }
 
-/* Spill Accents: Chili Oil Saucer & Garnishes */
+.spill-card-3 {
+    bottom: 18%;
+    left: 12%;
+    transform: translate3d(0, 0, 50px) rotate(-4deg);
+}
+
+.spill-card-4 {
+    bottom: 16%;
+    right: 12%;
+    transform: translate3d(0, 0, 65px) rotate(6deg);
+}
+
+/* Spill Saucer */
 .spill-sauce-dish {
     position: absolute;
-    bottom: 12px;
-    left: 22%;
+    bottom: 25%;
+    left: 48%;
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(220, 195, 160, 0.6);
     border-radius: 999px;
-    padding: 6px 12px;
-    box-shadow: 0 10px 24px rgba(60, 25, 10, 0.08);
-    z-index: 14;
+    padding: 6px 14px;
+    box-shadow: 0 12px 28px rgba(60, 25, 10, 0.2);
+    z-index: 24;
+    opacity: 0;
     pointer-events: none;
     will-change: transform, opacity;
-    transition: transform 0.2s ease-out;
 }
 
 .sauce-pool {
@@ -859,67 +948,88 @@ h1, h2, h3, .font-heading {
     color: #78350F;
 }
 
-.spill-garnish-cluster {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 13;
+/* Bottom Center Scroll Pill */
+.graphic-scroll-indicator {
+    position: relative;
+    z-index: 30;
+    padding-bottom: 24px;
+    display: flex;
+    justify-content: center;
 }
 
-.garnish-fleck {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    will-change: transform, opacity;
-}
-
-.fleck-1 { width: 6px; height: 6px; background: #15803D; top: 40%; left: 35%; opacity: 0.8; }
-.fleck-2 { width: 5px; height: 5px; background: #D97706; top: 46%; right: 36%; opacity: 0.85; }
-.fleck-3 { width: 7px; height: 7px; background: #16A34A; bottom: 35%; left: 38%; opacity: 0.75; }
-.fleck-4 { width: 4px; height: 4px; background: #B45309; bottom: 30%; right: 40%; opacity: 0.8; }
-
-/* Scroll Hint Pill */
-.steamer-scroll-hint {
+.scroll-indicator-pill {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    background: rgba(255, 255, 255, 0.94);
-    border: 1px solid rgba(217, 119, 6, 0.35);
+    gap: 10px;
+    padding: 10px 22px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
     border-radius: 999px;
-    box-shadow: 0 6px 18px rgba(78, 42, 10, 0.08);
-    transition: all 0.25s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     text-decoration: none;
+    transition: all 0.25s ease;
 }
 
-.steamer-scroll-hint:hover {
-    background: #FFFFFF;
-    border-color: rgba(217, 119, 6, 0.65);
-    box-shadow: 0 8px 24px rgba(217, 119, 6, 0.16);
+.scroll-indicator-pill:hover {
+    background: rgba(0, 0, 0, 0.65);
+    border-color: rgba(251, 191, 36, 0.6);
     transform: translateY(-2px);
 }
 
-@media (max-width: 900px) {
-    .spatial-constellation,
-    .steamer-spill-stage {
-        height: auto;
-        min-height: 440px;
+.mouse-icon {
+    width: 14px;
+    height: 22px;
+    border: 2px solid #FDE68A;
+    border-radius: 10px;
+    position: relative;
+}
+
+.mouse-wheel {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 5px;
+    background: #FDE68A;
+    border-radius: 2px;
+    animation: mouseScroll 1.5s infinite ease;
+}
+
+@keyframes mouseScroll {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, 8px); opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .graphic-stage-container {
         flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 20px 20px;
     }
-    .spatial-card,
-    .dumpling-flight-card {
-        position: relative !important;
-        inset: auto !important;
-        transform: none !important;
-        margin: 6px auto;
-        width: 100%;
-        max-width: 360px;
+    .graphic-editorial-col.left-col {
+        max-width: 100%;
+        margin-bottom: 20px;
     }
-    .spatial-card:hover,
-    .dumpling-flight-card:hover {
-        transform: none !important;
+    .steamer-centerpiece-stage {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 20px auto;
+        width: 320px;
+        height: 320px;
     }
-    .spill-sauce-dish, .spill-garnish-cluster {
+    .corner-dish-preview {
+        top: 88%;
+        left: 85%;
+        width: 100px;
+        height: 100px;
+    }
+    .spill-sauce-dish {
         display: none;
     }
 }

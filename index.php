@@ -18,201 +18,178 @@ $reviews = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 6")->fetchA
 include __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Lumina 3D Spatial Hero Sanctuary Showcase -->
-<section id="hero-sanctuary" class="spatial-hero-stage" data-bg-color="#FAF4EB">
-    <!-- Floating Subtle Petals & Glass Layer -->
+<!-- Full-Screen High-Fashion Graphic Hero Stage (Matching Reference Site Architecture) -->
+<section id="hero-sanctuary" class="graphic-hero-viewport" data-bg-color="#8C350F">
+    <!-- Fixed Visual Background Layer with Radial Vignette -->
+    <div class="fixed-visual-layer" id="heroVisualLayer"></div>
+    <div class="hero-vignette-overlay"></div>
+
+    <!-- Top Floating Ambient Elements -->
     <div class="petals-layer" id="welcomePetals"></div>
-    <div class="hero-glass" id="welcomeGlass"></div>
 
-    <div class="container text-center space-y-5 relative z-20 max-w-4xl mx-auto pt-4">
-        <div class="inline-flex items-center gap-2.5 bg-white/95 border border-amber-300 px-5 py-2 rounded-full text-xs font-semibold text-amber-900 shadow-sm backdrop-blur-md">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="tracking-wider uppercase font-bold text-[11px]">OPEN DAILY &bull; 7:00 AM – 11:00 PM &bull; ALL-DAY KITCHEN & CO-WORKING SANCTUARY</span>
+    <!-- Top Graphic Status Bar -->
+    <div class="graphic-hero-header container flex items-center justify-between relative z-30 pt-6 px-4 sm:px-8">
+        <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md text-amber-200 border border-amber-400/30 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-lg">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Open Daily &bull; 7:00 AM – 11:00 PM &bull; All-Day Sanctuary
+            </span>
         </div>
-
-        <h1 id="welcomeTitle" class="split font-heading text-4xl sm:text-5xl lg:text-7xl text-stone-900 font-extrabold tracking-tight leading-[1.08]">
-            Where Artisan Dim Sum, <br class="hidden sm:inline">
-            Inspired Work & <span class="text-amber-700 italic">Natural Light</span> Meet.
-        </h1>
-
-        <p class="text-stone-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Step into a sunlit sanctuary crafted for your entire day. Savor handcrafted truffle xiao long bao, stone-baked sourdough brunches, and single-origin coffee with 1Gbps fiber Wi-Fi and power outlets at every seat.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-3.5 pt-1">
-            <a href="#atmospheres-loop" class="btn-primary text-sm py-3 px-6 shadow-md hover:scale-105 transition-transform">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                Explore The 3 Rhythms
-            </a>
-            <a href="menu.php" class="btn-secondary text-sm py-3 px-6">
-                <i data-lucide="utensils" class="w-4 h-4"></i>
-                Dim Sum & Kitchen Menu (20+)
-            </a>
-            <a href="dashboard.php" class="btn-secondary text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-sm py-3 px-6">
-                <i data-lucide="radar" class="w-4 h-4"></i>
-                Live Seating Radar
-            </a>
-        </div>
-
-        <!-- Lumina Solar Horizon Time-of-Day Sunlight Temperature Switcher -->
-        <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
-            <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider mr-1 hidden sm:inline">Sunlight Temperature:</span>
-            <button class="solar-time-pill" onclick="window.setSolarHorizon('morning', this)">
-                <span>🌅</span> 08:00 AM Morning Dawn
-            </button>
-            <button class="solar-time-pill active" onclick="window.setSolarHorizon('noon', this)">
-                <span>☀️</span> 01:00 PM Midday Clarity
-            </button>
-            <button class="solar-time-pill" onclick="window.setSolarHorizon('twilight', this)">
-                <span>🌇</span> 07:30 PM Candlelight Twilight
-            </button>
+        <!-- Sunlight Temperature Switcher -->
+        <div class="hidden md:flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full shadow-lg">
+            <span class="text-[10px] font-bold text-amber-200/80 uppercase tracking-widest mr-1">Sunlight:</span>
+            <button class="solar-time-pill" onclick="window.setSolarHorizon('morning', this)">🌅 Morning</button>
+            <button class="solar-time-pill active" onclick="window.setSolarHorizon('noon', this)">☀️ Midday</button>
+            <button class="solar-time-pill" onclick="window.setSolarHorizon('twilight', this)">🌇 Twilight</button>
         </div>
     </div>
 
-    <!-- 3D Spatial Interactive Showcase: Bamboo Steamer & Dynamic Dumpling Spill Stage -->
-    <div class="spatial-constellation steamer-spill-stage" id="spatialConstellation">
+    <!-- Main Graphic Design Canvas Stage -->
+    <div class="graphic-stage-container" id="graphicStageContainer">
         
-        <!-- Centerpiece Artisan Bamboo Steamer Basket -->
-        <div class="steamer-bucket-stage" id="steamerStage">
-            <div class="steamer-aura-glow"></div>
-            
-            <!-- Rising Delicate Culinary Steam Wisps -->
+        <!-- Left Editorial Column (Magazine High-Fashion Typography) -->
+        <div class="graphic-editorial-col left-col">
+            <span class="editorial-badge">ARTISAN DIM SUM &bull; WORK &bull; BRUNCH</span>
+            <h1 class="editorial-title font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.02] tracking-tight drop-shadow-md">
+                Steamed to <br>
+                <span class="italic text-amber-300">Perfection.</span>
+            </h1>
+            <p class="editorial-desc text-stone-200 text-xs sm:text-sm max-w-sm leading-relaxed mt-3 drop-shadow-sm">
+                Organic Berkshire pork &amp; molten black truffle broth, hand-folded hourly in traditional bamboo steamers. Crafted for unhurried dining and deep work.
+            </p>
+            <div class="editorial-pricing flex items-center gap-4 mt-5">
+                <div class="price-callout text-white font-bold text-3xl font-heading drop-shadow-sm">$16.50</div>
+                <div class="text-[11px] text-amber-200/90 font-medium border-l border-white/20 pl-3">
+                    Fresh Bamboo Steamer &bull; 4 pcs<br>Aged Chinkiang Vinegar
+                </div>
+            </div>
+            <div class="editorial-actions flex items-center gap-3 mt-6">
+                <button onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="btn-primary bg-amber-500 hover:bg-amber-400 text-stone-900 border-none font-bold text-xs py-3 px-6 shadow-2xl">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add to Order Tray
+                </button>
+                <a href="#atmospheres-loop" class="btn-secondary bg-white/10 hover:bg-white/25 text-white border-white/30 text-xs py-3 px-5 backdrop-blur-md">
+                    Explore 3 Rhythms
+                </a>
+            </div>
+        </div>
+
+        <!-- Centerpiece Giant Steamer Bucket (State: MAIN - Exact Equivalent of Jacket 0) -->
+        <div class="steamer-centerpiece-stage" id="steamerCenterpieceStage">
+            <div class="steamer-glow-aura"></div>
+
+            <!-- Rising Fragrant Steam Wisps -->
             <div class="steamer-steam" id="steamerSteam">
                 <span class="steam-wisp wisp-1"></span>
                 <span class="steam-wisp wisp-2"></span>
                 <span class="steam-wisp wisp-3"></span>
             </div>
 
-            <!-- The Bamboo Steamer Basket Container (Tilted on Scroll) -->
-            <div id="welcome-steamer-element" class="steamer-basket" title="Scroll down or drag to tilt and spill!">
+            <!-- The Massive Bamboo Steamer Basket -->
+            <div id="welcome-steamer-element" class="steamer-main-bucket state-main" title="Scroll down or drag to tilt and spill!">
+                <div class="steamer-bamboo-weave"></div>
                 <div class="steamer-rim-ring"></div>
                 <img src="assets/images/steamer_dumplings.jpg" alt="Artisan Bamboo Steamer Filled with Handmade Dumplings" class="w-full h-full object-cover rounded-full pointer-events-none select-none shadow-2xl">
-                <!-- Bamboo Clasp Badge -->
-                <div class="steamer-center-badge">
-                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full border border-amber-300 shadow-sm backdrop-blur-sm">
-                        🥟 Chef's Steamer
-                    </span>
+                <!-- Bamboo Brass Plate Badge -->
+                <div class="steamer-brass-badge">
+                    <span>🥟 CHEF'S DUMPLING BUCKET</span>
                 </div>
             </div>
 
-            <!-- Steamer Lid (Slides/flips back dynamically as basket spills) -->
-            <div id="steamer-lid-element" class="steamer-lid">
+            <!-- Bamboo Lid that flips/flies on scroll -->
+            <div id="steamer-lid-element" class="steamer-flying-lid">
                 <div class="steamer-lid-handle"></div>
             </div>
         </div>
 
-        <!-- 4 Spilling Dumpling Flight Cards (3D Dynamic Trajectory Paths on Scroll) -->
-        <!-- Dumpling Flight Card 1: Top-Left (Truffle Xiao Long Bao) -->
-        <div class="dumpling-flight-card dumpling-card-1" data-dish="xiao-long-bao" data-depth="0.7">
-            <img src="assets/images/dumpling_xiao_long_bao.jpg" alt="Truffle Xiao Long Bao" class="dumpling-thumb shadow-sm">
-            <div class="text-left flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-1.5">
-                    <span class="text-xs font-bold text-stone-900 truncate">Truffle Xiao Long Bao</span>
-                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$16.50</span>
+        <!-- Right Sanctuary Column (Amenities & Quality Callouts) -->
+        <div class="graphic-editorial-col right-col hidden lg:flex flex-col gap-4">
+            <div class="sanctuary-feature-card">
+                <div class="w-10 h-10 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center border border-white/10 shadow-sm">
+                    <i data-lucide="wifi" class="w-5 h-5"></i>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium truncate">Molten truffle broth &bull; Chinkiang vinegar</div>
+                <div>
+                    <div class="text-xs font-bold text-white">1 Gbps Dedicated Fiber</div>
+                    <div class="text-[11px] text-stone-300">Ultra-low latency for video &amp; coding</div>
+                </div>
             </div>
-            <button onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="spill-add-btn" title="Add to Tray">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            </button>
+            <div class="sanctuary-feature-card">
+                <div class="w-10 h-10 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center border border-white/10 shadow-sm">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold text-white">Dual AC &amp; USB-C Outlets</div>
+                    <div class="text-[11px] text-stone-300">Equipped at every single table</div>
+                </div>
+            </div>
+            <div class="sanctuary-feature-card">
+                <div class="w-10 h-10 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center border border-white/10 shadow-sm">
+                    <i data-lucide="sun" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-bold text-white">Natural Light Botanical Atrium</div>
+                    <div class="text-[11px] text-stone-300">Glass skylights &amp; living ficus trees</div>
+                </div>
+            </div>
         </div>
 
-        <!-- Dumpling Flight Card 2: Top-Right (Crisp Golden Pan-Fried Gyoza) -->
-        <div class="dumpling-flight-card dumpling-card-2" data-dish="golden-gyoza" data-depth="0.85">
-            <img src="assets/images/dumpling_gyoza.jpg" alt="Crisp Golden Pan-Fried Gyoza" class="dumpling-thumb shadow-sm">
-            <div class="text-left flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-1.5">
-                    <span class="text-xs font-bold text-stone-900 truncate">Crisp Golden Gyoza</span>
-                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$14.80</span>
-                </div>
-                <div class="text-[11px] text-stone-500 font-medium truncate">Feathered crisp skirt &bull; Chili crisp</div>
+        <!-- Corner Dish Preview (State: PREVIEW - Exact Equivalent of Jacket 1 in Reference Site) -->
+        <div class="corner-dish-preview state-preview" id="cornerPreview" onclick="document.querySelector('#menu-favorites')?.scrollIntoView({behavior: 'smooth'})" title="Next Discovery: Crisp Golden Gyoza">
+            <img src="assets/images/dumpling_gyoza.jpg" alt="Next: Crisp Golden Gyoza" class="w-full h-full object-cover rounded-full shadow-2xl">
+            <div class="preview-hover-tag">
+                <span class="text-[10px] font-bold text-white uppercase tracking-wider">NEXT &bull; CRISP GYOZA $14.80</span>
             </div>
-            <button onclick="window.cafeCart.addItem({id: 18, name: 'Crisp Golden Pan-Fried Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg'})" class="spill-add-btn" title="Add to Tray">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            </button>
         </div>
 
-        <!-- Dumpling Flight Card 3: Bottom-Left (Sichuan Chili Oil Prawn Wontons) -->
-        <div class="dumpling-flight-card dumpling-card-3" data-dish="chili-wontons" data-depth="0.65">
-            <img src="assets/images/dumpling_wontons.jpg" alt="Sichuan Chili Oil Prawn Wontons" class="dumpling-thumb shadow-sm">
-            <div class="text-left flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-1.5">
-                    <span class="text-xs font-bold text-stone-900 truncate">Sichuan Chili Wontons</span>
-                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$15.50</span>
+        <!-- Spilling Dumpling Debris & Flight Cards (Explodes across screen on scroll) -->
+        <div class="spill-flight-cluster" id="spillFlightCluster">
+            <!-- Flight Card 1: Truffle Xiao Long Bao (Top Left) -->
+            <div class="dumpling-flight-card spill-card-1">
+                <img src="assets/images/dumpling_xiao_long_bao.jpg" alt="Truffle Xiao Long Bao" class="spill-thumb">
+                <div class="text-left flex-1 min-w-0">
+                    <div class="text-xs font-bold text-stone-900 truncate">Truffle Xiao Long Bao</div>
+                    <div class="text-[11px] text-amber-700 font-semibold">$16.50 &bull; Molten Broth</div>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium truncate">Wild tiger prawn &bull; House chili oil</div>
             </div>
-            <button onclick="window.cafeCart.addItem({id: 19, name: 'Sichuan Chili Oil Prawn Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg'})" class="spill-add-btn" title="Add to Tray">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            </button>
+            <!-- Flight Card 2: Crisp Golden Gyoza (Top Right) -->
+            <div class="dumpling-flight-card spill-card-2">
+                <img src="assets/images/dumpling_gyoza.jpg" alt="Crisp Golden Gyoza" class="spill-thumb">
+                <div class="text-left flex-1 min-w-0">
+                    <div class="text-xs font-bold text-stone-900 truncate">Crisp Golden Gyoza</div>
+                    <div class="text-[11px] text-amber-700 font-semibold">$14.80 &bull; Lace Skirt</div>
+                </div>
+            </div>
+            <!-- Flight Card 3: Sichuan Chili Wontons (Bottom Left Floor) -->
+            <div class="dumpling-flight-card spill-card-3">
+                <img src="assets/images/dumpling_wontons.jpg" alt="Sichuan Chili Wontons" class="spill-thumb">
+                <div class="text-left flex-1 min-w-0">
+                    <div class="text-xs font-bold text-stone-900 truncate">Sichuan Chili Wontons</div>
+                    <div class="text-[11px] text-amber-700 font-semibold">$15.50 &bull; Chili Crisp</div>
+                </div>
+            </div>
+            <!-- Flight Card 4: Steamed Wild Shiitake Bao (Bottom Right Floor) -->
+            <div class="dumpling-flight-card spill-card-4">
+                <img src="assets/images/dumpling_bao.jpg" alt="Steamed Shiitake Bao" class="spill-thumb">
+                <div class="text-left flex-1 min-w-0">
+                    <div class="text-xs font-bold text-stone-900 truncate">Steamed Shiitake Bao</div>
+                    <div class="text-[11px] text-amber-700 font-semibold">$13.80 &bull; Lotus Fold</div>
+                </div>
+            </div>
+            <!-- Spilling Accents: Chili Oil Saucer & Garnishes -->
+            <div class="spill-sauce-dish" id="spillSauce">
+                <div class="sauce-pool"></div>
+                <span class="sauce-label">🥢 Chili Crisp Splash</span>
+            </div>
         </div>
 
-        <!-- Dumpling Flight Card 4: Bottom-Right (Steamed Wild Shiitake & Truffle Bao) -->
-        <div class="dumpling-flight-card dumpling-card-4" data-dish="truffle-bao" data-depth="0.9">
-            <img src="assets/images/dumpling_bao.jpg" alt="Steamed Wild Shiitake & Truffle Bao" class="dumpling-thumb shadow-sm">
-            <div class="text-left flex-1 min-w-0">
-                <div class="flex items-center justify-between gap-1.5">
-                    <span class="text-xs font-bold text-stone-900 truncate">Steamed Shiitake Bao</span>
-                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$13.80</span>
-                </div>
-                <div class="text-[11px] text-stone-500 font-medium truncate">Pillowy lotus fold &bull; Forest shiitake</div>
-            </div>
-            <button onclick="window.cafeCart.addItem({id: 20, name: 'Steamed Wild Shiitake & Truffle Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg'})" class="spill-add-btn" title="Add to Tray">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            </button>
-        </div>
-
-        <!-- Spilling Accents & Debris (Sauce Ramekin, Sesame, Scallions) -->
-        <div class="spill-sauce-dish" id="spillSauce" title="Chili Crisp & Black Vinegar">
-            <div class="sauce-pool"></div>
-            <span class="sauce-label">🥢 House Chili Oil Dip</span>
-        </div>
-        <div class="spill-garnish-cluster" id="spillGarnish">
-            <span class="garnish-fleck fleck-1"></span>
-            <span class="garnish-fleck fleck-2"></span>
-            <span class="garnish-fleck fleck-3"></span>
-            <span class="garnish-fleck fleck-4"></span>
-        </div>
     </div>
 
-    <!-- Scroll Spill Prompt Hint Pill -->
-    <div class="relative z-20 pt-2 flex flex-col items-center justify-center">
-        <a href="#atmospheres-loop" class="steamer-scroll-hint group">
-            <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-                <i data-lucide="chevrons-down" class="w-4 h-4 text-amber-600 animate-bounce"></i>
-                Scroll down to spill dumplings & uncover Lumina sanctuary
-            </span>
+    <!-- Bottom Center Scroll Spill Indicator -->
+    <div class="graphic-scroll-indicator">
+        <a href="#atmospheres-loop" class="scroll-indicator-pill">
+            <span class="mouse-icon"><span class="mouse-wheel"></span></span>
+            <span class="text-[11px] font-bold text-white tracking-widest uppercase">Scroll down to spill dumplings &amp; reveal Lumina</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-300 animate-bounce"></i>
         </a>
-    </div>
-
-    <!-- Live Rolling Stats Row -->
-    <div class="container relative z-20 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto border-t border-stone-200/80 mt-10 text-center">
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-stone-900" data-to="1" data-dec="0" data-suf=" Gbps">1 Gbps</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Dedicated Fiber Wi-Fi</div>
-        </div>
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-amber-700" data-to="100" data-dec="0" data-suf="%">100%</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Power Sockets at Desks</div>
-        </div>
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-emerald-700" data-to="20" data-dec="0" data-suf="+ Dishes">20+ Dishes</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Dim Sum, Brunch & Mains</div>
-        </div>
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-stone-900" data-to="4" data-dec="0" data-suf=" Zones">4 Zones</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Skylight, Patio, Study, Bar</div>
-        </div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Power Sockets at Desks</div>
-        </div>
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-emerald-700" data-to="16" data-dec="0" data-suf="+ Dishes">16+ Dishes</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Chef Brunch & Mains</div>
-        </div>
-        <div>
-            <div class="stat-counter font-heading text-3xl font-extrabold text-stone-900" data-to="4" data-dec="0" data-suf=" Zones">4 Zones</div>
-            <div class="text-xs text-stone-500 font-medium mt-1">Skylight, Patio, Study, Bar</div>
-        </div>
     </div>
 </section>
 
@@ -1055,8 +1032,8 @@ include __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- Include Interactive Scripts -->
-<script src="assets/js/scrolly.js"></script>
-<script src="assets/js/welcome-transition.js"></script>
+<!-- Include Interactive Scripts with Cache Buster -->
+<script src="assets/js/scrolly.js?v=<?= time() ?>"></script>
+<script src="assets/js/welcome-transition.js?v=<?= time() ?>"></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

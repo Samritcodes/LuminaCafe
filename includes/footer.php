@@ -144,8 +144,8 @@
         </div>
     </footer>
 
-    <!-- Core Scripts -->
-    <script src="assets/js/cart.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Core Scripts with Cache Buster -->
+    <script src="assets/js/cart.js?v=<?= time() ?>"></script>
+    <script src="assets/js/main.js?v=<?= time() ?>"></script>
 </body>
 </html>
