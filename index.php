@@ -142,6 +142,9 @@ include __DIR__ . '/includes/header.php';
             </div>
         </div>
 
+        <!-- Individual dumpling pieces: animated independently during the scroll spill -->
+        <div class="dumpling-particle-layer" id="dumplingParticleLayer" aria-hidden="true"></div>
+
         <!-- Spilling Dumpling Debris & Flight Cards (Explodes across screen on scroll) -->
         <div class="spill-flight-cluster" id="spillFlightCluster">
             <!-- Flight Card 1: Truffle Xiao Long Bao (Top Left) -->

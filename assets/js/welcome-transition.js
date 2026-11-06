@@ -139,7 +139,90 @@
     const card3 = document.querySelector('.spill-card-3');
     const card4 = document.querySelector('.spill-card-4');
     const sauce = document.getElementById('spillSauce');
+    const particleLayer = document.getElementById('dumplingParticleLayer');
     const targetSection = document.getElementById('atmospheres-loop');
+
+    // Create separate food pieces so the contents visibly escape the steamer,
+    // rather than moving only the surrounding product cards.
+    const particleRecipes = [
+        { dishId: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg', x: -0.34, y: -0.30, rotate: -250, delay: 0.00, scale: 1.05 },
+        { dishId: 18, name: 'Crisp Golden Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg',        x:  0.34, y: -0.32, rotate:  220, delay: 0.06, scale: 0.92 },
+        { dishId: 19, name: 'Sichuan Chili Oil Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg',      x: -0.43, y:  0.08, rotate: -330, delay: 0.13, scale: 0.82 },
+        { dishId: 20, name: 'Steamed Wild Shiitake Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg',          x:  0.42, y:  0.12, rotate:  300, delay: 0.18, scale: 1.12 },
+        { dishId: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg',x: -0.20, y: -0.48, rotate:  190, delay: 0.24, scale: 0.72 },
+        { dishId: 18, name: 'Crisp Golden Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg',         x:  0.18, y:  0.43, rotate: -280, delay: 0.29, scale: 0.88 },
+        { dishId: 19, name: 'Sichuan Chili Oil Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg',       x:  0.49, y: -0.12, rotate:  360, delay: 0.35, scale: 0.70 },
+        { dishId: 20, name: 'Steamed Wild Shiitake Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg',           x: -0.48, y:  0.36, rotate: -190, delay: 0.41, scale: 0.78 }
+    ];
+    const dumplingParticles = [];
+
+    // Cache viewport dimensions to avoid costly layout reflow queries during scroll
+    let cachedViewportWidth = Math.min(window.innerWidth * 0.92, 1050);
+    let cachedViewportHeight = Math.min(window.innerHeight * 0.78, 700);
+
+    window.addEventListener('resize', () => {
+        cachedViewportWidth = Math.min(window.innerWidth * 0.92, 1050);
+        cachedViewportHeight = Math.min(window.innerHeight * 0.78, 700);
+    }, { passive: true });
+
+    function buildDumplingParticles() {
+        if (!particleLayer || dumplingParticles.length) return;
+        const fragment = document.createDocumentFragment();
+        particleRecipes.forEach((recipe, index) => {
+            const piece = document.createElement('img');
+            piece.className = 'dumpling-particle';
+            piece.src = recipe.image;
+            piece.alt = recipe.name;
+            piece.title = `${recipe.name} • Click to add to tray!`;
+            piece.draggable = false;
+            piece.dataset.index = String(index);
+
+            // Interactive micro-interaction: catching a flying dumpling adds it to the cart
+            piece.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.showToast?.(`🥟 Caught a ${recipe.name}! Added to your tray.`, 'success');
+                if (window.cafeCart && recipe.dishId) {
+                    window.cafeCart.addItem({
+                        id: recipe.dishId,
+                        name: recipe.name,
+                        price: recipe.price,
+                        image: recipe.image
+                    });
+                }
+            });
+
+            fragment.appendChild(piece);
+            dumplingParticles.push({ element: piece, recipe });
+        });
+        particleLayer.appendChild(fragment);
+    }
+
+    function updateDumplingParticles(progress) {
+        if (!dumplingParticles.length) return;
+        const width = cachedViewportWidth;
+        const height = cachedViewportHeight;
+        dumplingParticles.forEach(({ element, recipe }) => {
+            if (progress < recipe.delay) {
+                element.style.opacity = '0';
+                element.style.pointerEvents = 'none';
+                return;
+            }
+
+            const local = Math.max(0, Math.min(1, (progress - recipe.delay) / (1 - recipe.delay)));
+            // Ballistic lifted arc followed by outward scatter trajectory
+            const arc = Math.sin(local * Math.PI) * 115;
+            const x = (recipe.x * width * local).toFixed(1);
+            const y = (recipe.y * height * local - arc + (local * local * 105)).toFixed(1);
+            const rotation = (recipe.rotate * local).toFixed(1);
+            const scale = ((0.25 + local * 0.85) * recipe.scale).toFixed(3);
+            const opacity = (Math.min(1, local * 4.5) * (progress > 0.91 ? Math.max(0, (1 - progress) / 0.09) : 1)).toFixed(3);
+            const depth = (Math.sin(local * Math.PI) * 150).toFixed(1);
+
+            element.style.opacity = opacity;
+            element.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${depth}px) rotate(${rotation}deg) scale(${scale})`;
+            element.style.pointerEvents = opacity > 0.4 ? 'auto' : 'none';
+        });
+    }
 
     let currentProgress = 0;
     let confettiFired = false;
@@ -149,6 +232,7 @@
     // Apply exact spatial 3D transform based on progress [0.0 -> 1.0]
     function applySpillTransform(progress) {
         currentProgress = Math.min(1, Math.max(0, progress));
+        updateDumplingParticles(currentProgress);
 
         // Update HUD pill active state
         let activeStage = 0;
@@ -209,6 +293,11 @@
                     c.style.pointerEvents = 'none';
                     c.style.transform = 'translate3d(0, 0, 0) scale(0.2)';
                 }
+            });
+            dumplingParticles.forEach(({ element }) => {
+                element.style.opacity = '0';
+                element.style.pointerEvents = 'none';
+                element.style.transform = 'translate3d(-50%, -50%, 0) scale(0.2)';
             });
             if (sauce) {
                 sauce.style.opacity = '0';
@@ -607,6 +696,7 @@
 
     // 13) Bootstrap on DOMContentLoaded
     function init() {
+        buildDumplingParticles();
         initWordSplit();
         initPetals();
         initSpatialTilt();
