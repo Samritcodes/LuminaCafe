@@ -1,26 +1,29 @@
 /**
  * assets/js/welcome-transition.js - Lumina Café & Kitchen
- * High-Fashion Full-Screen Graphic Motion Engine
- * Architecture: GSAP ScrollTrigger Pinned Viewport + 3D Dumpling Spill + Autonomous Physics
+ * High-Fashion Cinematic Food Commercial Hero Stage
+ * 4-Stage Scroll-Driven Dumpling Spill Engine with Hardware-Accelerated 3D Physics
  */
 
 (function () {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1) Split Words Helper for Hero Typography
-    function initWordSplit() {
-        const title = document.querySelector('.editorial-title');
+    // 1) Split Words & Cinematic Title Entrance
+    function initCinematicHeader() {
+        const title = document.querySelector('.cinematic-main-title');
+        const eyebrow = document.querySelector('.cinematic-eyebrow');
+        const sub = document.querySelector('.cinematic-main-sub');
         if (!title || reduceMotion) return;
 
         if (typeof gsap !== 'undefined') {
             gsap.fromTo(
-                title,
-                { opacity: 0, y: 30, filter: 'blur(10px)' },
+                [eyebrow, title, sub],
+                { opacity: 0, y: 24, filter: 'blur(8px)' },
                 {
                     opacity: 1,
                     y: 0,
                     filter: 'blur(0px)',
-                    duration: 1.1,
+                    duration: 1.2,
+                    stagger: 0.12,
                     ease: 'power3.out'
                 }
             );
@@ -123,46 +126,130 @@
         requestAnimationFrame(step);
     }
 
-    // 6) MASTER GRAPHIC MOTION & PINNED DUMPLING SPILL ENGINE
+    // 6) MASTER 4-STAGE CINEMATIC DUMPLING SPILL ENGINE
     const heroSection = document.getElementById('hero-sanctuary');
     const visualLayer = document.getElementById('heroVisualLayer');
+    const cinematicHeader = document.getElementById('cinematicHeader');
     const steamer = document.getElementById('welcome-steamer-element');
     const lid = document.getElementById('steamer-lid-element');
     const steam = document.getElementById('steamerSteam');
-    const preview = document.getElementById('cornerPreview');
-    const leftCol = document.querySelector('.graphic-editorial-col.left-col');
-    const rightCol = document.querySelector('.graphic-editorial-col.right-col');
+    const floorShadow = document.getElementById('steamerFloorShadow');
     const indicator = document.querySelector('.graphic-scroll-indicator');
     const hudPills = document.querySelectorAll('.graphic-motion-hud .hud-pill');
-    const card1 = document.querySelector('.spill-card-1');
-    const card2 = document.querySelector('.spill-card-2');
-    const card3 = document.querySelector('.spill-card-3');
-    const card4 = document.querySelector('.spill-card-4');
     const sauce = document.getElementById('spillSauce');
     const particleLayer = document.getElementById('dumplingParticleLayer');
     const targetSection = document.getElementById('atmospheres-loop');
 
-    // Create separate food pieces so the contents visibly escape the steamer,
-    // rather than moving only the surrounding product cards.
+    // 8 Authentic Studio Food Transparent PNG Cutouts
+    // Each with its own trajectory, lift arc, 3D rotation, scale, and z-depth
     const particleRecipes = [
-        { dishId: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg', x: -0.34, y: -0.30, rotate: -250, delay: 0.00, scale: 1.05 },
-        { dishId: 18, name: 'Crisp Golden Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg',        x:  0.34, y: -0.32, rotate:  220, delay: 0.06, scale: 0.92 },
-        { dishId: 19, name: 'Sichuan Chili Oil Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg',      x: -0.43, y:  0.08, rotate: -330, delay: 0.13, scale: 0.82 },
-        { dishId: 20, name: 'Steamed Wild Shiitake Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg',          x:  0.42, y:  0.12, rotate:  300, delay: 0.18, scale: 1.12 },
-        { dishId: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg',x: -0.20, y: -0.48, rotate:  190, delay: 0.24, scale: 0.72 },
-        { dishId: 18, name: 'Crisp Golden Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg',         x:  0.18, y:  0.43, rotate: -280, delay: 0.29, scale: 0.88 },
-        { dishId: 19, name: 'Sichuan Chili Oil Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg',       x:  0.49, y: -0.12, rotate:  360, delay: 0.35, scale: 0.70 },
-        { dishId: 20, name: 'Steamed Wild Shiitake Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg',           x: -0.48, y:  0.36, rotate: -190, delay: 0.41, scale: 0.78 }
+        {
+            dishId: 17,
+            name: 'Truffle Xiao Long Bao',
+            price: 16.50,
+            image: 'assets/images/dumpling_fly_xlb.png',
+            x: -0.42,
+            y: -0.28,
+            rotate: -240,
+            delay: 0.00,
+            scale: 1.15,
+            depth: 180
+        },
+        {
+            dishId: 18,
+            name: 'Crisp Golden Gyoza',
+            price: 14.80,
+            image: 'assets/images/dumpling_fly_gyoza.png',
+            x: 0.40,
+            y: -0.32,
+            rotate: 260,
+            delay: 0.05,
+            scale: 1.12,
+            depth: 170
+        },
+        {
+            dishId: 19,
+            name: 'Sichuan Chili Oil Wonton',
+            price: 15.50,
+            image: 'assets/images/dumpling_fly_wonton.png',
+            x: -0.48,
+            y: 0.06,
+            rotate: -340,
+            delay: 0.10,
+            scale: 1.05,
+            depth: 120
+        },
+        {
+            dishId: 20,
+            name: 'Steamed Wild Shiitake Bao',
+            price: 13.80,
+            image: 'assets/images/dumpling_fly_bao.png',
+            x: 0.45,
+            y: 0.10,
+            rotate: 210,
+            delay: 0.15,
+            scale: 1.20,
+            depth: 190
+        },
+        {
+            dishId: 17,
+            name: 'Artisan Soup Dumpling',
+            price: 16.50,
+            image: 'assets/images/dumpling_piece_5.png',
+            x: -0.16,
+            y: -0.46,
+            rotate: 190,
+            delay: 0.20,
+            scale: 0.85,
+            depth: -60
+        },
+        {
+            dishId: 18,
+            name: 'Pan-Fried Dumpling',
+            price: 14.80,
+            image: 'assets/images/dumpling_piece_12.png',
+            x: 0.32,
+            y: 0.36,
+            rotate: -210,
+            delay: 0.25,
+            scale: 1.10,
+            depth: 140
+        },
+        {
+            dishId: 19,
+            name: 'Silken Dumpling',
+            price: 15.50,
+            image: 'assets/images/dumpling_piece_20.png',
+            x: -0.35,
+            y: 0.38,
+            rotate: 180,
+            delay: 0.28,
+            scale: 1.08,
+            depth: 130
+        },
+        {
+            dishId: 17,
+            name: 'Truffle Xiao Long Bao',
+            price: 16.50,
+            image: 'assets/images/dumpling_fly_xlb.png',
+            x: 0.50,
+            y: -0.12,
+            rotate: 360,
+            delay: 0.32,
+            scale: 0.95,
+            depth: 70
+        }
     ];
+
     const dumplingParticles = [];
 
-    // Cache viewport dimensions to avoid costly layout reflow queries during scroll
-    let cachedViewportWidth = Math.min(window.innerWidth * 0.92, 1050);
-    let cachedViewportHeight = Math.min(window.innerHeight * 0.78, 700);
+    // Cache viewport dimensions to avoid layout reflow queries during scroll
+    let cachedViewportWidth = Math.min(window.innerWidth * 0.94, 1150);
+    let cachedViewportHeight = Math.min(window.innerHeight * 0.82, 750);
 
     window.addEventListener('resize', () => {
-        cachedViewportWidth = Math.min(window.innerWidth * 0.92, 1050);
-        cachedViewportHeight = Math.min(window.innerHeight * 0.78, 700);
+        cachedViewportWidth = Math.min(window.innerWidth * 0.94, 1150);
+        cachedViewportHeight = Math.min(window.innerHeight * 0.82, 750);
     }, { passive: true });
 
     function buildDumplingParticles() {
@@ -201,22 +288,27 @@
         if (!dumplingParticles.length) return;
         const width = cachedViewportWidth;
         const height = cachedViewportHeight;
+
         dumplingParticles.forEach(({ element, recipe }) => {
-            if (progress < recipe.delay) {
+            if (progress <= recipe.delay) {
                 element.style.opacity = '0';
                 element.style.pointerEvents = 'none';
+                element.style.transform = 'translate3d(-50%, -50%, 0) scale(0.2)';
                 return;
             }
 
             const local = Math.max(0, Math.min(1, (progress - recipe.delay) / (1 - recipe.delay)));
-            // Ballistic lifted arc followed by outward scatter trajectory
-            const arc = Math.sin(local * Math.PI) * 115;
+            
+            // 1. Initial parabolic lift arc out of the basket followed by outward spill trajectory
+            const arc = Math.sin(local * Math.PI) * 140;
             const x = (recipe.x * width * local).toFixed(1);
-            const y = (recipe.y * height * local - arc + (local * local * 105)).toFixed(1);
+            const y = (recipe.y * height * local - arc + (local * local * 115)).toFixed(1);
             const rotation = (recipe.rotate * local).toFixed(1);
-            const scale = ((0.25 + local * 0.85) * recipe.scale).toFixed(3);
-            const opacity = (Math.min(1, local * 4.5) * (progress > 0.91 ? Math.max(0, (1 - progress) / 0.09) : 1)).toFixed(3);
-            const depth = (Math.sin(local * Math.PI) * 150).toFixed(1);
+            const scale = ((0.28 + local * 0.85) * recipe.scale).toFixed(3);
+            
+            // Fade out smoothly towards stage 4
+            const opacity = (Math.min(1, local * 4.2) * (progress > 0.88 ? Math.max(0, (1 - progress) / 0.12) : 1)).toFixed(3);
+            const depth = (recipe.depth * Math.sin(local * Math.PI)).toFixed(1);
 
             element.style.opacity = opacity;
             element.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), ${depth}px) rotate(${rotation}deg) scale(${scale})`;
@@ -229,14 +321,14 @@
     let isProgrammaticScroll = false;
     let pinScrollTrigger = null;
 
-    // Apply exact spatial 3D transform based on progress [0.0 -> 1.0]
+    // Apply exact spatial 3D transform across the 4 stages [0.0 -> 1.0]
     function applySpillTransform(progress) {
         currentProgress = Math.min(1, Math.max(0, progress));
         updateDumplingParticles(currentProgress);
 
         // Update HUD pill active state
         let activeStage = 0;
-        if (currentProgress >= 0.75) {
+        if (currentProgress >= 0.78) {
             activeStage = 2;
         } else if (currentProgress >= 0.25) {
             activeStage = 1;
@@ -250,14 +342,20 @@
             }
         });
 
-        // Background Color Morphing
+        // Continuous Background Color Morphing across Stages
         if (visualLayer) {
-            if (currentProgress < 0.35) {
-                visualLayer.style.background = 'linear-gradient(135deg, #8C350F 0%, #C25E00 45%, #7C2D12 100%)';
-            } else if (currentProgress < 0.75) {
-                visualLayer.style.background = 'linear-gradient(135deg, #B45309 0%, #D97706 45%, #92400E 100%)';
+            if (currentProgress < 0.32) {
+                // Initial Burnt Terracotta
+                visualLayer.style.background = 'radial-gradient(circle at 50% 50%, #B45309 0%, #7C2D12 50%, #451A03 100%)';
+            } else if (currentProgress < 0.72) {
+                // The Explosive Spill Warm Amber Saffron
+                visualLayer.style.background = 'radial-gradient(circle at 50% 50%, #D97706 0%, #C25E00 45%, #78350F 100%)';
+            } else if (currentProgress < 0.88) {
+                // Dramatic Atmospheric Transition
+                visualLayer.style.background = 'radial-gradient(circle at 50% 50%, #44403C 0%, #1C1917 55%, #0C0A09 100%)';
             } else {
-                visualLayer.style.background = 'linear-gradient(135deg, #292524 0%, #1C1917 50%, #44403C 100%)';
+                // Reveal Café Warm Luminous Architectural Cream
+                visualLayer.style.background = 'radial-gradient(circle at 50% 50%, #FFFDF8 0%, #FAF8F5 55%, #F5F2EB 100%)';
             }
         }
 
@@ -266,39 +364,29 @@
             if (steamer) {
                 steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1)';
                 steamer.style.opacity = '1';
-                steamer.style.animation = 'floatBreathing 4s ease-in-out infinite';
+                steamer.style.animation = 'floatBreathing 4.5s ease-in-out infinite';
             }
             if (lid) {
                 lid.style.transform = 'none';
                 lid.style.opacity = '1';
             }
             if (steam) steam.style.opacity = '1';
-            if (preview) {
-                preview.style.transform = 'translate(-50%, -50%) scale(0.85)';
-                preview.style.opacity = '1';
+            if (floorShadow) {
+                floorShadow.style.transform = 'translateX(-50%) scale(1)';
+                floorShadow.style.opacity = '1';
             }
-            if (leftCol) {
-                leftCol.style.transform = 'none';
-                leftCol.style.opacity = '1';
-            }
-            if (rightCol) {
-                rightCol.style.transform = 'none';
-                rightCol.style.opacity = '1';
+            if (cinematicHeader) {
+                cinematicHeader.style.transform = 'translateX(-50%)';
+                cinematicHeader.style.opacity = '1';
             }
             if (indicator) indicator.style.opacity = '1';
 
-            [card1, card2, card3, card4].forEach((c) => {
-                if (c) {
-                    c.style.opacity = '0';
-                    c.style.pointerEvents = 'none';
-                    c.style.transform = 'translate3d(0, 0, 0) scale(0.2)';
-                }
-            });
             dumplingParticles.forEach(({ element }) => {
                 element.style.opacity = '0';
                 element.style.pointerEvents = 'none';
                 element.style.transform = 'translate3d(-50%, -50%, 0) scale(0.2)';
             });
+
             if (sauce) {
                 sauce.style.opacity = '0';
                 sauce.style.transform = 'none';
@@ -312,104 +400,65 @@
             steamer.style.animation = 'none';
         }
 
-        // Phase 1: Bucket Tilts & Lid Pops Off [0.02 -> 0.35]
-        const p1 = Math.min(1, currentProgress / 0.35);
+        // Fade out initial editorial title gently as scroll begins
+        if (cinematicHeader) {
+            const headOp = Math.max(0, 1 - currentProgress * 3.2);
+            cinematicHeader.style.opacity = headOp;
+            cinematicHeader.style.transform = `translateX(-50%) translateY(${-currentProgress * 65}px)`;
+        }
+        if (indicator) {
+            indicator.style.opacity = Math.max(0, 1 - currentProgress * 4);
+        }
+
+        // STAGE 1 & 2: Steamer Tilts in 3D & Lid Catapults Off
+        const p1 = Math.min(1, currentProgress / 0.40);
         if (steamer) {
-            const tiltX = 65 * p1;
-            const tiltZ = -22 * p1;
-            const posY = p1 * 180;
-            const scale = 1 + p1 * 0.12;
-            const op = currentProgress > 0.70 ? Math.max(0, 1 - (currentProgress - 0.70) * 3) : 1;
+            const tiltX = 68 * currentProgress;
+            const tiltZ = -24 * currentProgress;
+            const posY = currentProgress * 260;
+            const scale = 1 + currentProgress * 0.12;
+            const op = currentProgress > 0.82 ? Math.max(0, 1 - (currentProgress - 0.82) * 4.5) : 1;
             steamer.style.transform = `translate3d(0, ${posY}px, 0) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) scale(${scale})`;
             steamer.style.opacity = op;
         }
 
+        if (floorShadow) {
+            const shadowX = currentProgress * 60;
+            const shadowScale = Math.max(0.4, 1 - currentProgress * 0.5);
+            floorShadow.style.transform = `translateX(calc(-50% + ${shadowX}px)) scale(${shadowScale})`;
+            floorShadow.style.opacity = Math.max(0, 1 - currentProgress * 1.4);
+        }
+
         if (lid) {
-            const lidX = p1 * 240;
-            const lidY = -p1 * 220;
-            const lidRot = p1 * 65;
-            lid.style.transform = `translate3d(${lidX}px, ${lidY}px, 120px) rotate(${lidRot}deg) rotateX(${p1 * 35}deg)`;
+            const lidX = p1 * 260;
+            const lidY = -p1 * 240;
+            const lidRot = p1 * 75;
+            lid.style.transform = `translate3d(${lidX}px, ${lidY}px, 140px) rotate(${lidRot}deg) rotateX(${p1 * 40}deg)`;
             lid.style.opacity = Math.max(0, 1 - p1 * 1.8);
         }
 
-        if (steam) steam.style.opacity = Math.max(0, 1 - p1 * 2.2);
-
-        if (preview) {
-            preview.style.transform = `translate(-50%, -50%) scale(${0.85 - p1 * 0.3}) translate3d(${p1 * 100}px, ${p1 * 80}px, 0)`;
-            preview.style.opacity = Math.max(0, 1 - p1 * 1.8);
+        if (steam) {
+            steam.style.opacity = Math.max(0, 1 - currentProgress * 2.5);
         }
 
-        if (leftCol) {
-            leftCol.style.transform = `translate3d(${-p1 * 120}px, 0, 0)`;
-            leftCol.style.opacity = Math.max(0, 1 - p1 * 1.6);
-        }
-        if (rightCol) {
-            rightCol.style.transform = `translate3d(${p1 * 120}px, 0, 0)`;
-            rightCol.style.opacity = Math.max(0, 1 - p1 * 1.6);
-        }
-        if (indicator) indicator.style.opacity = Math.max(0, 1 - p1 * 3);
-
-        // Phase 2: THE EXPLOSIVE DUMPLING SPILL [0.20 -> 0.85]
-        const spillP = Math.min(1, Math.max(0, (currentProgress - 0.20) / 0.55));
-        const spillOp = currentProgress < 0.70 
-            ? Math.min(1, spillP * 2.2) 
-            : Math.max(0, 1 - (currentProgress - 0.70) * 3.2);
-
-        if (spillP > 0) {
-            // Card 1: Truffle Xiao Long Bao (Top Left)
-            if (card1) {
-                const dx1 = -spillP * 340;
-                const dy1 = -spillP * 140 + (spillP * spillP * 45);
-                const s1 = 0.3 + spillP * 0.85;
-                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 110px) rotate(${-spillP * 14}deg) scale(${s1})`;
-                card1.style.opacity = spillOp;
-                card1.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
-            }
-
-            // Card 2: Crisp Golden Gyoza (Top Right)
-            if (card2) {
-                const dx2 = spillP * 340;
-                const dy2 = -spillP * 130 + (spillP * spillP * 40);
-                const s2 = 0.3 + spillP * 0.85;
-                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 110px) rotate(${spillP * 14}deg) scale(${s2})`;
-                card2.style.opacity = spillOp;
-                card2.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
-            }
-
-            // Card 3: Sichuan Chili Wontons (Bottom Left Floor)
-            if (card3) {
-                const dx3 = -spillP * 310;
-                const dy3 = spillP * 200;
-                const s3 = 0.3 + spillP * 0.8;
-                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 80px) rotate(${-spillP * 8}deg) scale(${s3})`;
-                card3.style.opacity = spillOp;
-                card3.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
-            }
-
-            // Card 4: Steamed Wild Shiitake Bao (Bottom Right Floor)
-            if (card4) {
-                const dx4 = spillP * 310;
-                const dy4 = spillP * 210;
-                const s4 = 0.3 + spillP * 0.8;
-                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 80px) rotate(${spillP * 10}deg) scale(${s4})`;
-                card4.style.opacity = spillOp;
-                card4.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
-            }
-
-            // Chili Sauce Splash onto floor
+        // STAGE 3: THE BIG DUMPLING SPILL ACCENTS
+        if (currentProgress >= 0.35 && currentProgress <= 0.88) {
+            const spillP = (currentProgress - 0.35) / 0.50;
+            
+            // Chili sauce dish splash down to the floor
             if (sauce) {
-                const sauceY = spillP * 150;
+                const sauceY = spillP * 160;
                 const sauceS = 0.4 + spillP * 0.75;
                 sauce.style.transform = `translate3d(0, ${sauceY}px, 50px) scale(${sauceS})`;
-                sauce.style.opacity = spillOp;
+                sauce.style.opacity = Math.min(1, spillP * 2.5) * (currentProgress > 0.82 ? Math.max(0, 1 - (currentProgress - 0.82) * 4) : 1);
             }
 
             // Trigger Golden Sesame & Chili Flake Confetti Burst
-            if (spillP > 0.45 && !confettiFired && typeof confetti === 'function') {
+            if (currentProgress > 0.48 && !confettiFired && typeof confetti === 'function') {
                 confettiFired = true;
                 confetti({
-                    particleCount: 35,
-                    spread: 70,
+                    particleCount: 40,
+                    spread: 80,
                     origin: { y: 0.6 },
                     colors: ['#F59E0B', '#FBBF24', '#DC2626', '#FEF3C7', '#B45309']
                 });
@@ -424,7 +473,7 @@
             window.addEventListener('scroll', () => {
                 if (isProgrammaticScroll) return;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-                const progress = Math.min(1, Math.max(0, scrollY / 700));
+                const progress = Math.min(1, Math.max(0, scrollY / 850));
                 applySpillTransform(progress);
             }, { passive: true });
             return;
@@ -439,9 +488,9 @@
         pinScrollTrigger = ScrollTrigger.create({
             trigger: '#hero-sanctuary',
             start: 'top top',
-            end: '+=1000',
+            end: '+=1100',
             pin: true,
-            scrub: 0.6,
+            scrub: 0.7,
             anticipatePin: 1,
             onUpdate: (self) => {
                 if (isProgrammaticScroll) return;
@@ -476,10 +525,10 @@
             } else if (stageIndex === 1) {
                 // Jump to Mid-Spill Explosion
                 isProgrammaticScroll = true;
-                const pinEnd = pinScrollTrigger ? pinScrollTrigger.start + 550 : 550;
+                const pinMid = pinScrollTrigger ? pinScrollTrigger.start + 580 : 580;
                 if (typeof gsap !== 'undefined') {
                     gsap.to(window, {
-                        scrollTo: pinEnd,
+                        scrollTo: pinMid,
                         duration: 0.9,
                         ease: 'power2.inOut',
                         onUpdate: () => applySpillTransform(0.55),
@@ -489,13 +538,13 @@
                         }
                     });
                 } else {
-                    gentleScrollTo(pinEnd, 800);
+                    gentleScrollTo(pinMid, 800);
                     applySpillTransform(0.55);
                     isProgrammaticScroll = false;
                 }
             } else if (stageIndex === 2) {
                 // Reveal the Full Café Platform
-                const targetY = targetSection ? targetSection.offsetTop - 40 : 1200;
+                const targetY = targetSection ? targetSection.offsetTop - 40 : 1300;
                 isProgrammaticScroll = true;
                 if (typeof gsap !== 'undefined') {
                     gsap.to(window, {
@@ -514,23 +563,23 @@
             }
         },
 
-        // Play the complete cinematic spill motion from 0 to 1 smoothly
+        // Play the complete cinematic slow-motion spill sequence from 0 to 1
         playCinematicSpill: function () {
             isProgrammaticScroll = true;
-            window.showToast?.('🥟 Tilting Steamer! Watch the Dumpling Spill & Welcome to Lumina!', 'info');
+            window.showToast?.('🥟 The Dumpling Spill Unleashed! Welcome to Lumina.', 'info');
 
             // Quick bucket jiggle before launching
             if (steamer) {
                 steamer.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
-                steamer.style.transform = 'scale(0.95) rotateX(10deg)';
+                steamer.style.transform = 'scale(0.96) rotateX(8deg)';
             }
 
             setTimeout(() => {
-                const targetY = targetSection ? targetSection.offsetTop - 20 : 1200;
+                const targetY = targetSection ? targetSection.offsetTop - 20 : 1300;
                 if (typeof gsap !== 'undefined') {
                     gsap.to(window, {
                         scrollTo: targetY,
-                        duration: 1.4,
+                        duration: 1.6,
                         ease: 'power2.inOut',
                         onUpdate: function () {
                             const prog = this.progress();
@@ -542,7 +591,7 @@
                         }
                     });
                 } else {
-                    gentleScrollTo(targetY, 1200);
+                    gentleScrollTo(targetY, 1400);
                     isProgrammaticScroll = false;
                 }
             }, 200);
@@ -594,7 +643,7 @@
 
         steamer.style.transition = 'transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
-        steamer.style.animation = 'floatBreathing 4s ease-in-out infinite';
+        steamer.style.animation = 'floatBreathing 4.5s ease-in-out infinite';
         currentX = 0;
         currentY = 0;
     }
@@ -697,7 +746,7 @@
     // 13) Bootstrap on DOMContentLoaded
     function init() {
         buildDumplingParticles();
-        initWordSplit();
+        initCinematicHeader();
         initPetals();
         initSpatialTilt();
         initNavbarManager();
@@ -706,7 +755,7 @@
         initStatsObserver();
         initAnchorSmoothScroll();
 
-        // Initial State
+        // Initial Restored State
         applySpillTransform(0);
     }
 

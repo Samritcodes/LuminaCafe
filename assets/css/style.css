@@ -579,7 +579,7 @@ h1, h2, h3, .font-heading {
 }
 
 /* ==========================================================================
-   Full-Screen High-Fashion Graphic Hero Stage (Reference Site Architecture)
+   Full-Screen High-Fashion Graphic Hero Stage (Cinematic Food Commercial Architecture)
    ========================================================================== */
 .graphic-hero-viewport {
     position: relative;
@@ -588,9 +588,10 @@ h1, h2, h3, .font-heading {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     perspective: 1400px;
-    background: #8C350F;
+    background: #7C2D12;
 }
 
 /* 1. Fixed Visual Layer with Rich Graphic Gradient */
@@ -599,20 +600,79 @@ h1, h2, h3, .font-heading {
     inset: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #8C350F 0%, #C25E00 45%, #7C2D12 100%);
+    background: radial-gradient(circle at 50% 50%, #B45309 0%, #7C2D12 50%, #451A03 100%);
     transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
 }
 
-/* 2. Radial Dark Vignette Overlay (Leaves center glowing and edges cinematic) */
+/* 2. Radial Dark Vignette Overlay */
 .hero-vignette-overlay {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, transparent 25%, rgba(0, 0, 0, 0.50) 100%);
+    background: radial-gradient(circle at center, transparent 30%, rgba(15, 4, 1, 0.70) 100%);
     pointer-events: none;
     z-index: 2;
+}
+
+/* Warm Centerpiece Spotlight Aura */
+.steamer-spotlight-aura {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(500px, 65vw, 900px);
+    height: clamp(500px, 65vw, 900px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.32) 0%, rgba(217, 119, 6, 0.14) 45%, transparent 72%);
+    filter: blur(55px);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Minimal High-Fashion Editorial Typography */
+.cinematic-editorial-header {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+    width: 90%;
+    max-width: 850px;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.cinematic-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    color: #FDE68A;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-main-title {
+    font-size: clamp(2.4rem, 6.2vw, 5.2rem);
+    font-weight: 800;
+    line-height: 1.04;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-main-sub {
+    font-size: clamp(12px, 1.4vw, 15px);
+    color: rgba(254, 243, 199, 0.92);
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
 /* 3. Main Graphic Stage Container */
@@ -620,71 +680,25 @@ h1, h2, h3, .font-heading {
     position: relative;
     width: 100%;
     max-width: 1440px;
+    height: 100vh;
     margin: auto;
-    padding: 20px 48px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     z-index: 10;
     perspective: 1200px;
-    min-height: calc(100vh - 160px);
-}
-
-/* Left & Right Editorial Columns */
-.graphic-editorial-col {
-    position: relative;
-    z-index: 25;
-}
-
-.graphic-editorial-col.left-col {
-    max-width: 460px;
-}
-
-.editorial-badge {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    color: #FDE68A;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-}
-
-.sanctuary-feature-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: rgba(0, 0, 0, 0.30);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    padding: 12px 18px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
-    transition: transform 0.25s ease, background 0.25s ease;
-    user-select: none;
-    width: 290px;
-}
-
-.sanctuary-feature-card:hover {
-    transform: translateX(-4px);
-    background: rgba(0, 0, 0, 0.45);
 }
 
 /* ==========================================================================
-   Centerpiece Giant Steamer Bucket (State: MAIN)
+   Centerpiece Giant Steamer Bucket (State: MAIN - Pure Realistic Cutout)
    ========================================================================== */
 .steamer-centerpiece-stage {
     position: absolute;
-    top: 50%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(340px, 38vw, 500px);
-    height: clamp(340px, 38vw, 500px);
+    width: clamp(340px, 38vw, 560px);
+    aspect-ratio: 1.25;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -692,34 +706,37 @@ h1, h2, h3, .font-heading {
     transform-style: preserve-3d;
 }
 
-.steamer-glow-aura {
+.steamer-floor-shadow {
     position: absolute;
-    inset: -40px;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 82%;
+    height: 48px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.38) 0%, rgba(217, 119, 6, 0.15) 50%, transparent 75%);
-    filter: blur(35px);
+    background: radial-gradient(ellipse at center, rgba(30, 8, 2, 0.65) 0%, rgba(20, 5, 0, 0.35) 45%, transparent 75%);
+    filter: blur(14px);
     pointer-events: none;
-    z-index: 1;
+    z-index: 5;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .steamer-main-bucket {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     cursor: grab;
     z-index: 10;
-    border: 10px solid #C49A6C;
-    box-shadow: 
-        0 40px 80px rgba(40, 10, 0, 0.60),
-        inset 0 0 0 5px #78481E,
-        inset 0 0 35px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 30px 50px rgba(35, 8, 2, 0.55));
     transform-style: preserve-3d;
     transition: transform 0.15s ease-out;
     will-change: transform;
     user-select: none;
     -webkit-user-select: none;
-    animation: floatBreathing 4s ease-in-out infinite;
+    animation: floatBreathing 4.5s ease-in-out infinite;
 }
 
 @keyframes floatBreathing {
@@ -727,7 +744,7 @@ h1, h2, h3, .font-heading {
         transform: translate3d(0, 0, 0) rotate(0deg);
     }
     50% {
-        transform: translate3d(0, -12px, 0) rotate(1.4deg);
+        transform: translate3d(0, -14px, 0) rotate(1.2deg);
     }
 }
 
@@ -887,27 +904,32 @@ h1, h2, h3, .font-heading {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: clamp(54px, 6.2vw, 88px);
+    width: clamp(70px, 8.5vw, 125px);
     aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 46% 54% 48% 52%;
-    border: 3px solid rgba(255, 239, 205, .9);
-    box-shadow: 0 18px 32px rgba(35, 12, 3, .38), 0 3px 9px rgba(255, 220, 160, .25);
+    object-fit: contain;
+    filter: drop-shadow(0 22px 28px rgba(30, 8, 2, 0.55));
     opacity: 0;
     transform: translate3d(-50%, -50%, 0) scale(.2) rotate(0deg);
     will-change: transform, opacity;
     backface-visibility: hidden;
     cursor: pointer;
-    transition: filter 0.2s ease, box-shadow 0.2s ease;
+    pointer-events: auto;
+    transition: filter 0.25s ease;
 }
 
 .dumpling-particle:hover {
-    filter: brightness(1.18);
-    box-shadow: 0 24px 44px rgba(245, 158, 11, .5), 0 0 25px rgba(251, 191, 36, .45);
+    filter: drop-shadow(0 25px 35px rgba(245, 158, 11, 0.7)) brightness(1.18);
 }
 
 @media (max-width: 700px) {
-    .dumpling-particle { width: clamp(42px, 13vw, 64px); border-width: 2px; }
+    .dumpling-particle {
+        width: clamp(48px, 12vw, 75px);
+        filter: drop-shadow(0 14px 20px rgba(30, 8, 2, 0.45));
+    }
+}
+
+@media (max-width: 420px) {
+    .dumpling-particle { width: 48px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
