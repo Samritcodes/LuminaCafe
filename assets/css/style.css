@@ -719,6 +719,16 @@ h1, h2, h3, .font-heading {
     will-change: transform;
     user-select: none;
     -webkit-user-select: none;
+    animation: floatBreathing 4s ease-in-out infinite;
+}
+
+@keyframes floatBreathing {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate3d(0, -12px, 0) rotate(1.4deg);
+    }
 }
 
 .steamer-main-bucket:active {
@@ -946,6 +956,171 @@ h1, h2, h3, .font-heading {
     font-size: 11px;
     font-weight: 700;
     color: #78350F;
+}
+
+.spill-add-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #F59E0B;
+    color: #1C1917;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+    transition: transform 0.15s ease, background 0.15s ease;
+    flex-shrink: 0;
+}
+
+.spill-add-btn:hover {
+    background: #FBBF24;
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Graphic Motion HUD Controller (Bottom Right Luxury Glass Pill)
+   ========================================================================== */
+.graphic-motion-hud {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1050;
+    pointer-events: auto;
+    user-select: none;
+}
+
+.hud-pill-track {
+    display: flex;
+    align-items: center;
+    background: rgba(28, 25, 23, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.hud-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    white-space: nowrap;
+}
+
+.hud-pill:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.hud-pill.active {
+    background: #F59E0B;
+    color: #1C1917;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.hud-pill .hud-num {
+    font-size: 9px;
+    font-weight: 900;
+    opacity: 0.8;
+    padding: 2px 5px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.hud-pill.active .hud-num {
+    background: rgba(0, 0, 0, 0.25);
+    color: #1C1917;
+}
+
+.hud-play-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    border: 1px solid rgba(251, 191, 36, 0.8);
+    color: #1C1917;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(217, 119, 6, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hud-play-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 14px 30px rgba(217, 119, 6, 0.5);
+}
+
+.hud-play-btn:active {
+    transform: scale(0.96);
+}
+
+/* Luxury Transparent Glass Navbar Over Hero */
+.navbar-light.navbar-on-hero {
+    background: rgba(24, 12, 6, 0.60) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.navbar-light.navbar-on-hero .font-heading {
+    color: #FFFFFF !important;
+}
+
+.navbar-light.navbar-on-hero .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.navbar-light.navbar-on-hero .nav-link:hover,
+.navbar-light.navbar-on-hero .nav-link.active {
+    color: #FBBF24 !important;
+}
+
+.navbar-light.navbar-on-hero #cart-toggle-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    color: #FFFFFF !important;
+}
+
+.navbar-light.navbar-on-hero #cart-toggle-btn i {
+    color: #FFFFFF !important;
+}
+
+@media (max-width: 768px) {
+    .graphic-motion-hud {
+        bottom: 16px;
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+    }
+    .hud-pill .hud-text {
+        display: none;
+    }
+    .hud-pill .hud-num {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
 }
 
 /* Bottom Center Scroll Pill */

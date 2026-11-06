@@ -54,9 +54,10 @@ if (!isset($activeNav)) {
     <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-    <!-- GSAP & ScrollTrigger -->
+    <!-- GSAP, ScrollTrigger & ScrollToPlugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
     <!-- Custom CSS with Cache Buster -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">

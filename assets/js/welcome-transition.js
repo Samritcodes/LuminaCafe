@@ -1,7 +1,7 @@
 /**
  * assets/js/welcome-transition.js - Lumina Café & Kitchen
- * 3D Spatial Hero Constellation & Interactive Loop Accordion
- * Hardware-accelerated, zero-lag, continuous bidirectional restore
+ * High-Fashion Full-Screen Graphic Motion Engine
+ * Architecture: GSAP ScrollTrigger Pinned Viewport + 3D Dumpling Spill + Autonomous Physics
  */
 
 (function () {
@@ -9,48 +9,19 @@
 
     // 1) Split Words Helper for Hero Typography
     function initWordSplit() {
-        const title = document.getElementById('welcomeTitle');
-        if (!title) return;
+        const title = document.querySelector('.editorial-title');
+        if (!title || reduceMotion) return;
 
-        function processNode(node) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                const text = node.textContent;
-                const segments = text.split(/(\s+)/);
-                const frag = document.createDocumentFragment();
-                for (const seg of segments) {
-                    if (!seg) continue;
-                    if (/^\s+$/.test(seg)) {
-                        frag.appendChild(document.createTextNode(seg));
-                    } else {
-                        const span = document.createElement('span');
-                        span.className = 'w';
-                        span.textContent = seg;
-                        frag.appendChild(span);
-                    }
-                }
-                node.parentNode.replaceChild(frag, node);
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                if (node.tagName === 'BR') return;
-                Array.from(node.childNodes).forEach(processNode);
-            }
-        }
-        Array.from(title.childNodes).forEach(processNode);
-
-        if (typeof gsap !== 'undefined' && !reduceMotion) {
-            const words = title.querySelectorAll('.w');
+        if (typeof gsap !== 'undefined') {
             gsap.fromTo(
-                words,
-                { opacity: 0, y: 22, filter: 'blur(8px)' },
+                title,
+                { opacity: 0, y: 30, filter: 'blur(10px)' },
                 {
                     opacity: 1,
                     y: 0,
                     filter: 'blur(0px)',
-                    duration: 0.85,
-                    stagger: 0.04,
-                    ease: 'power2.out',
-                    onComplete: () => {
-                        words.forEach((w) => (w.style.filter = 'none'));
-                    }
+                    duration: 1.1,
+                    ease: 'power3.out'
                 }
             );
         }
@@ -63,14 +34,14 @@
 
         const types = ['petal-jasmine', 'petal-amber', 'petal-coffee'];
         const fragment = document.createDocumentFragment();
-        for (let i = 0; i < 14; i++) {
+        for (let i = 0; i < 16; i++) {
             const petal = document.createElement('span');
             const type = types[i % types.length];
             petal.className = `aroma-petal ${type}`;
             petal.style.left = (Math.random() * 100) + '%';
-            const dx = (Math.random() * 140 - 70) + 'px';
+            const dx = (Math.random() * 160 - 80) + 'px';
             petal.style.setProperty('--dx', dx);
-            petal.style.animationDuration = (10 + Math.random() * 8) + 's';
+            petal.style.animationDuration = (9 + Math.random() * 8) + 's';
             petal.style.animationDelay = -(Math.random() * 12) + 's';
             const s = (0.7 + Math.random() * 0.5);
             petal.style.transform = `scale(${s}) translateZ(0)`;
@@ -79,30 +50,9 @@
         container.appendChild(fragment);
     }
 
-    // 3) Floating Glass Accents
-    function initGlass() {
-        const container = document.getElementById('welcomeGlass');
-        if (!container || reduceMotion) return;
-
-        const coords = [
-            [5, 65], [7, 78], [85, 66], [88, 80]
-        ];
-        const fragment = document.createDocumentFragment();
-        coords.forEach(([x, y]) => {
-            const sq = document.createElement('div');
-            sq.className = 'glass';
-            sq.style.left = x + '%';
-            sq.style.top = y + '%';
-            sq.style.width = 'clamp(34px, 4vw, 50px)';
-            sq.style.aspectRatio = '1';
-            fragment.appendChild(sq);
-        });
-        container.appendChild(fragment);
-    }
-
-    // 4) 3D Spatial Mouse Parallax Tilt
+    // 3) 3D Spatial Mouse Parallax Tilt
     function initSpatialTilt() {
-        const stage = document.getElementById('graphicStageContainer') || document.getElementById('spatialConstellation');
+        const stage = document.getElementById('graphicStageContainer');
         const hero = document.getElementById('hero-sanctuary');
         if (!stage || !hero || reduceMotion || window.innerWidth <= 900) return;
 
@@ -116,8 +66,8 @@
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-            targetRX = -y * 10; // tilt X
-            targetRY = x * 12;  // tilt Y
+            targetRX = -y * 12; // tilt X
+            targetRY = x * 14;  // tilt Y
         });
 
         hero.addEventListener('mouseleave', () => {
@@ -133,6 +83,24 @@
             requestAnimationFrame(renderTilt);
         }
         requestAnimationFrame(renderTilt);
+    }
+
+    // 4) Transparent Glass Navbar Manager Over Hero
+    function initNavbarManager() {
+        const navbar = document.querySelector('.navbar-light');
+        if (!navbar) return;
+
+        function updateNavbar() {
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollY < 120) {
+                navbar.classList.add('navbar-on-hero');
+            } else {
+                navbar.classList.remove('navbar-on-hero');
+            }
+        }
+
+        window.addEventListener('scroll', updateNavbar, { passive: true });
+        updateNavbar();
     }
 
     // 5) Gentle Smooth Scroll Helper
@@ -155,7 +123,9 @@
         requestAnimationFrame(step);
     }
 
-    // 6) Full-Screen Graphic Bamboo Steamer & Dynamic Spill Engine
+    // 6) MASTER GRAPHIC MOTION & PINNED DUMPLING SPILL ENGINE
+    const heroSection = document.getElementById('hero-sanctuary');
+    const visualLayer = document.getElementById('heroVisualLayer');
     const steamer = document.getElementById('welcome-steamer-element');
     const lid = document.getElementById('steamer-lid-element');
     const steam = document.getElementById('steamerSteam');
@@ -163,6 +133,7 @@
     const leftCol = document.querySelector('.graphic-editorial-col.left-col');
     const rightCol = document.querySelector('.graphic-editorial-col.right-col');
     const indicator = document.querySelector('.graphic-scroll-indicator');
+    const hudPills = document.querySelectorAll('.graphic-motion-hud .hud-pill');
     const card1 = document.querySelector('.spill-card-1');
     const card2 = document.querySelector('.spill-card-2');
     const card3 = document.querySelector('.spill-card-3');
@@ -170,136 +141,338 @@
     const sauce = document.getElementById('spillSauce');
     const targetSection = document.getElementById('atmospheres-loop');
 
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let ticking = false;
+    let currentProgress = 0;
+    let confettiFired = false;
+    let isProgrammaticScroll = false;
+    let pinScrollTrigger = null;
 
-    function updateScrollMotion() {
-        if (isDragging || !steamer) {
-            ticking = false;
-            return;
+    // Apply exact spatial 3D transform based on progress [0.0 -> 1.0]
+    function applySpillTransform(progress) {
+        currentProgress = Math.min(1, Math.max(0, progress));
+
+        // Update HUD pill active state
+        let activeStage = 0;
+        if (currentProgress >= 0.75) {
+            activeStage = 2;
+        } else if (currentProgress >= 0.25) {
+            activeStage = 1;
+        }
+        hudPills.forEach((pill) => {
+            const stage = parseInt(pill.getAttribute('data-stage') || '0', 10);
+            if (stage === activeStage) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
+
+        // Background Color Morphing
+        if (visualLayer) {
+            if (currentProgress < 0.35) {
+                visualLayer.style.background = 'linear-gradient(135deg, #8C350F 0%, #C25E00 45%, #7C2D12 100%)';
+            } else if (currentProgress < 0.75) {
+                visualLayer.style.background = 'linear-gradient(135deg, #B45309 0%, #D97706 45%, #92400E 100%)';
+            } else {
+                visualLayer.style.background = 'linear-gradient(135deg, #292524 0%, #1C1917 50%, #44403C 100%)';
+            }
         }
 
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const maxScroll = 550;
-        const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
-
-        if (progress > 0) {
-            // 1. Giant Steamer Bucket Tilts & Tumbles Forward
-            const tiltX = 65 * progress;
-            const tiltZ = -20 * progress;
-            const posY = progress * 240;
-            const scale = 1 + progress * 0.20;
-            const opacity = Math.max(0, 1 - Math.pow(progress, 1.35));
-
-            steamer.style.transform = `translate3d(0, ${posY}px, 0) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) scale(${scale})`;
-            steamer.style.opacity = opacity;
-
-            // 2. Bamboo Lid shoots off into the distance
+        if (currentProgress <= 0.02) {
+            // Stage 0: 100% Upright Restored Steamer Basket
+            if (steamer) {
+                steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1)';
+                steamer.style.opacity = '1';
+                steamer.style.animation = 'floatBreathing 4s ease-in-out infinite';
+            }
             if (lid) {
-                lid.style.transform = `translate3d(${progress * 180}px, ${-progress * 220}px, 120px) rotate(${progress * 55}deg) rotateX(${progress * 30}deg)`;
-                lid.style.opacity = Math.max(0, 1 - progress * 1.8);
+                lid.style.transform = 'none';
+                lid.style.opacity = '1';
             }
-
-            // 3. Fragrant Steam disperses
-            if (steam) {
-                steam.style.opacity = Math.max(0, 1 - progress * 2.5);
-            }
-
-            // 4. Corner Preview dish slides away
+            if (steam) steam.style.opacity = '1';
             if (preview) {
-                preview.style.transform = `translate(-50%, -50%) scale(${0.85 + progress * 0.25}) translate3d(${progress * 90}px, ${progress * 70}px, 0)`;
-                preview.style.opacity = Math.max(0, 1 - progress * 1.6);
+                preview.style.transform = 'translate(-50%, -50%) scale(0.85)';
+                preview.style.opacity = '1';
             }
-
-            // 5. Left & Right Editorial Columns dissolve outward
             if (leftCol) {
-                leftCol.style.transform = `translate3d(${-progress * 140}px, 0, 0)`;
-                leftCol.style.opacity = Math.max(0, 1 - progress * 1.7);
+                leftCol.style.transform = 'none';
+                leftCol.style.opacity = '1';
             }
             if (rightCol) {
-                rightCol.style.transform = `translate3d(${progress * 140}px, 0, 0)`;
-                rightCol.style.opacity = Math.max(0, 1 - progress * 1.7);
+                rightCol.style.transform = 'none';
+                rightCol.style.opacity = '1';
             }
-            if (indicator) {
-                indicator.style.opacity = Math.max(0, 1 - progress * 3);
-            }
-
-            // 6. THE DUMPLING SPILL (4 Dishes Spill Across Screen & Floor)
-            const spillProgress = Math.min(1, Math.max(0, (progress - 0.04) / 0.75));
-            const spillOp = spillProgress < 0.65 ? spillProgress * 1.6 : Math.max(0, (1 - spillProgress) * 2.8);
-
-            if (card1) {
-                const dx1 = -spillProgress * 320;
-                const dy1 = -spillProgress * 140 + (spillProgress * spillProgress * 90);
-                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 100px) rotate(${-spillProgress * 22}deg) scale(${1 + spillProgress * 0.15})`;
-                card1.style.opacity = spillOp;
-            }
-            if (card2) {
-                const dx2 = spillProgress * 340;
-                const dy2 = -spillProgress * 130 + (spillProgress * spillProgress * 80);
-                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 110px) rotate(${spillProgress * 20}deg) scale(${1 + spillProgress * 0.15})`;
-                card2.style.opacity = spillOp;
-            }
-            if (card3) {
-                const dx3 = -spillProgress * 280;
-                const dy3 = spillProgress * 200;
-                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 70px) rotate(${-spillProgress * 15}deg) scale(${1 + spillProgress * 0.12})`;
-                card3.style.opacity = spillOp;
-            }
-            if (card4) {
-                const dx4 = spillProgress * 290;
-                const dy4 = spillProgress * 210;
-                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 80px) rotate(${spillProgress * 18}deg) scale(${1 + spillProgress * 0.12})`;
-                card4.style.opacity = spillOp;
-            }
-            if (sauce) {
-                sauce.style.transform = `translate3d(${-spillProgress * 180}px, ${spillProgress * 120}px, 40px) scale(${1 + spillProgress * 0.2})`;
-                sauce.style.opacity = spillOp;
-            }
-        } else {
-            // 100% Fully Restored when user scrolls back to top
-            steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1)';
-            steamer.style.opacity = '1';
-
-            if (lid) { lid.style.transform = 'none'; lid.style.opacity = '1'; }
-            if (steam) { steam.style.opacity = '1'; }
-            if (preview) { preview.style.transform = 'translate(-50%, -50%) scale(0.85)'; preview.style.opacity = '1'; }
-            if (leftCol) { leftCol.style.transform = 'none'; leftCol.style.opacity = '1'; }
-            if (rightCol) { rightCol.style.transform = 'none'; rightCol.style.opacity = '1'; }
-            if (indicator) { indicator.style.opacity = '1'; }
+            if (indicator) indicator.style.opacity = '1';
 
             [card1, card2, card3, card4].forEach((c) => {
                 if (c) {
                     c.style.opacity = '0';
-                    c.style.transform = 'none';
+                    c.style.pointerEvents = 'none';
+                    c.style.transform = 'translate3d(0, 0, 0) scale(0.2)';
                 }
             });
             if (sauce) {
                 sauce.style.opacity = '0';
                 sauce.style.transform = 'none';
             }
+            confettiFired = false;
+            return;
         }
 
-        ticking = false;
-    }
+        // Steamer is in active motion, stop breathing animation to let transform take over
+        if (steamer) {
+            steamer.style.animation = 'none';
+        }
 
-    function onNativeScroll() {
-        if (!ticking) {
-            requestAnimationFrame(updateScrollMotion);
-            ticking = true;
+        // Phase 1: Bucket Tilts & Lid Pops Off [0.02 -> 0.35]
+        const p1 = Math.min(1, currentProgress / 0.35);
+        if (steamer) {
+            const tiltX = 65 * p1;
+            const tiltZ = -22 * p1;
+            const posY = p1 * 180;
+            const scale = 1 + p1 * 0.12;
+            const op = currentProgress > 0.70 ? Math.max(0, 1 - (currentProgress - 0.70) * 3) : 1;
+            steamer.style.transform = `translate3d(0, ${posY}px, 0) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) scale(${scale})`;
+            steamer.style.opacity = op;
+        }
+
+        if (lid) {
+            const lidX = p1 * 240;
+            const lidY = -p1 * 220;
+            const lidRot = p1 * 65;
+            lid.style.transform = `translate3d(${lidX}px, ${lidY}px, 120px) rotate(${lidRot}deg) rotateX(${p1 * 35}deg)`;
+            lid.style.opacity = Math.max(0, 1 - p1 * 1.8);
+        }
+
+        if (steam) steam.style.opacity = Math.max(0, 1 - p1 * 2.2);
+
+        if (preview) {
+            preview.style.transform = `translate(-50%, -50%) scale(${0.85 - p1 * 0.3}) translate3d(${p1 * 100}px, ${p1 * 80}px, 0)`;
+            preview.style.opacity = Math.max(0, 1 - p1 * 1.8);
+        }
+
+        if (leftCol) {
+            leftCol.style.transform = `translate3d(${-p1 * 120}px, 0, 0)`;
+            leftCol.style.opacity = Math.max(0, 1 - p1 * 1.6);
+        }
+        if (rightCol) {
+            rightCol.style.transform = `translate3d(${p1 * 120}px, 0, 0)`;
+            rightCol.style.opacity = Math.max(0, 1 - p1 * 1.6);
+        }
+        if (indicator) indicator.style.opacity = Math.max(0, 1 - p1 * 3);
+
+        // Phase 2: THE EXPLOSIVE DUMPLING SPILL [0.20 -> 0.85]
+        const spillP = Math.min(1, Math.max(0, (currentProgress - 0.20) / 0.55));
+        const spillOp = currentProgress < 0.70 
+            ? Math.min(1, spillP * 2.2) 
+            : Math.max(0, 1 - (currentProgress - 0.70) * 3.2);
+
+        if (spillP > 0) {
+            // Card 1: Truffle Xiao Long Bao (Top Left)
+            if (card1) {
+                const dx1 = -spillP * 340;
+                const dy1 = -spillP * 140 + (spillP * spillP * 45);
+                const s1 = 0.3 + spillP * 0.85;
+                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 110px) rotate(${-spillP * 14}deg) scale(${s1})`;
+                card1.style.opacity = spillOp;
+                card1.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
+            }
+
+            // Card 2: Crisp Golden Gyoza (Top Right)
+            if (card2) {
+                const dx2 = spillP * 340;
+                const dy2 = -spillP * 130 + (spillP * spillP * 40);
+                const s2 = 0.3 + spillP * 0.85;
+                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 110px) rotate(${spillP * 14}deg) scale(${s2})`;
+                card2.style.opacity = spillOp;
+                card2.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
+            }
+
+            // Card 3: Sichuan Chili Wontons (Bottom Left Floor)
+            if (card3) {
+                const dx3 = -spillP * 310;
+                const dy3 = spillP * 200;
+                const s3 = 0.3 + spillP * 0.8;
+                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 80px) rotate(${-spillP * 8}deg) scale(${s3})`;
+                card3.style.opacity = spillOp;
+                card3.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
+            }
+
+            // Card 4: Steamed Wild Shiitake Bao (Bottom Right Floor)
+            if (card4) {
+                const dx4 = spillP * 310;
+                const dy4 = spillP * 210;
+                const s4 = 0.3 + spillP * 0.8;
+                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 80px) rotate(${spillP * 10}deg) scale(${s4})`;
+                card4.style.opacity = spillOp;
+                card4.style.pointerEvents = spillOp > 0.5 ? 'auto' : 'none';
+            }
+
+            // Chili Sauce Splash onto floor
+            if (sauce) {
+                const sauceY = spillP * 150;
+                const sauceS = 0.4 + spillP * 0.75;
+                sauce.style.transform = `translate3d(0, ${sauceY}px, 50px) scale(${sauceS})`;
+                sauce.style.opacity = spillOp;
+            }
+
+            // Trigger Golden Sesame & Chili Flake Confetti Burst
+            if (spillP > 0.45 && !confettiFired && typeof confetti === 'function') {
+                confettiFired = true;
+                confetti({
+                    particleCount: 35,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#F59E0B', '#FBBF24', '#DC2626', '#FEF3C7', '#B45309']
+                });
+            }
         }
     }
 
-    // 7) Interactive Drag & Spring Physics
+    // 7) Set Up GSAP ScrollTrigger Viewport Pinning
+    function initPinnedSpillTrigger() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || !heroSection) {
+            // Fallback to native window scroll calculation
+            window.addEventListener('scroll', () => {
+                if (isProgrammaticScroll) return;
+                const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                const progress = Math.min(1, Math.max(0, scrollY / 700));
+                applySpillTransform(progress);
+            }, { passive: true });
+            return;
+        }
+
+        if (typeof ScrollToPlugin !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        } else {
+            gsap.registerPlugin(ScrollTrigger);
+        }
+
+        pinScrollTrigger = ScrollTrigger.create({
+            trigger: '#hero-sanctuary',
+            start: 'top top',
+            end: '+=1000',
+            pin: true,
+            scrub: 0.6,
+            anticipatePin: 1,
+            onUpdate: (self) => {
+                if (isProgrammaticScroll) return;
+                applySpillTransform(self.progress);
+            }
+        });
+    }
+
+    // 8) Public API for User Interaction & HUD Controller
+    window.luminaMotion = {
+        // Jump to any stage: 0 = Steamer Bucket, 1 = Spill Explosion, 2 = Full Café
+        jumpToStage: function (stageIndex) {
+            if (stageIndex === 0) {
+                // Return to top
+                isProgrammaticScroll = true;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(window, {
+                        scrollTo: 0,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        onUpdate: () => applySpillTransform(0),
+                        onComplete: () => {
+                            isProgrammaticScroll = false;
+                            applySpillTransform(0);
+                        }
+                    });
+                } else {
+                    gentleScrollTo(0, 700);
+                    applySpillTransform(0);
+                    isProgrammaticScroll = false;
+                }
+            } else if (stageIndex === 1) {
+                // Jump to Mid-Spill Explosion
+                isProgrammaticScroll = true;
+                const pinEnd = pinScrollTrigger ? pinScrollTrigger.start + 550 : 550;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(window, {
+                        scrollTo: pinEnd,
+                        duration: 0.9,
+                        ease: 'power2.inOut',
+                        onUpdate: () => applySpillTransform(0.55),
+                        onComplete: () => {
+                            isProgrammaticScroll = false;
+                            applySpillTransform(0.55);
+                        }
+                    });
+                } else {
+                    gentleScrollTo(pinEnd, 800);
+                    applySpillTransform(0.55);
+                    isProgrammaticScroll = false;
+                }
+            } else if (stageIndex === 2) {
+                // Reveal the Full Café Platform
+                const targetY = targetSection ? targetSection.offsetTop - 40 : 1200;
+                isProgrammaticScroll = true;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(window, {
+                        scrollTo: targetY,
+                        duration: 1.0,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                            isProgrammaticScroll = false;
+                            applySpillTransform(1);
+                        }
+                    });
+                } else {
+                    gentleScrollTo(targetY, 900);
+                    isProgrammaticScroll = false;
+                }
+            }
+        },
+
+        // Play the complete cinematic spill motion from 0 to 1 smoothly
+        playCinematicSpill: function () {
+            isProgrammaticScroll = true;
+            window.showToast?.('🥟 Tilting Steamer! Watch the Dumpling Spill & Welcome to Lumina!', 'info');
+
+            // Quick bucket jiggle before launching
+            if (steamer) {
+                steamer.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+                steamer.style.transform = 'scale(0.95) rotateX(10deg)';
+            }
+
+            setTimeout(() => {
+                const targetY = targetSection ? targetSection.offsetTop - 20 : 1200;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(window, {
+                        scrollTo: targetY,
+                        duration: 1.4,
+                        ease: 'power2.inOut',
+                        onUpdate: function () {
+                            const prog = this.progress();
+                            applySpillTransform(prog);
+                        },
+                        onComplete: () => {
+                            isProgrammaticScroll = false;
+                            applySpillTransform(1);
+                        }
+                    });
+                } else {
+                    gentleScrollTo(targetY, 1200);
+                    isProgrammaticScroll = false;
+                }
+            }, 200);
+        }
+    };
+
+    // 9) Interactive Drag & Spring Physics on Steamer
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
     function startDrag(x, y) {
         if (!steamer) return;
         isDragging = true;
         startX = x - currentX;
         startY = y - currentY;
+        steamer.style.animation = 'none';
         steamer.style.transition = 'none';
         steamer.style.cursor = 'grabbing';
     }
@@ -311,18 +484,17 @@
         currentY = y - startY;
 
         const distance = Math.hypot(currentX, currentY);
-        const rotX = -currentY * 0.12;
-        const rotY = currentX * 0.14;
-        const rotZ = currentX * 0.05;
-        const scale = Math.max(0.92, 1 - distance * 0.0007);
+        const rotX = -currentY * 0.14;
+        const rotY = currentX * 0.16;
+        const rotZ = currentX * 0.06;
+        const scale = Math.max(0.90, 1 - distance * 0.0008);
 
         steamer.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale})`;
 
-        if (distance > 110 || currentY > 80 || currentY < -70) {
+        // If dragged past threshold, trigger spill and reveal cafe
+        if (distance > 120 || currentY > 90) {
             endDrag();
-            const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
-            gentleScrollTo(targetY, 1050);
-            window.showToast?.('🥟 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
+            window.luminaMotion.playCinematicSpill();
         }
     }
 
@@ -333,26 +505,36 @@
 
         steamer.style.transition = 'transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
+        steamer.style.animation = 'floatBreathing 4s ease-in-out infinite';
         currentX = 0;
         currentY = 0;
     }
 
-    function onClickSteamer() {
-        if (!steamer) return;
-        steamer.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
-        steamer.style.transform = 'scale(0.96) rotateX(8deg)';
+    if (steamer) {
+        steamer.addEventListener('dragstart', (e) => e.preventDefault());
+        steamer.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            startDrag(e.clientX, e.clientY);
+        });
+        window.addEventListener('mousemove', (e) => onDrag(e.clientX, e.clientY));
+        window.addEventListener('mouseup', () => endDrag());
 
-        setTimeout(() => {
-            steamer.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            steamer.style.transform = 'scale(1) rotateX(0deg)';
+        steamer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) startDrag(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchmove', (e) => {
+            if (isDragging && e.touches.length === 1) onDrag(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchend', () => endDrag());
 
-            const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
-            gentleScrollTo(targetY, 1050);
-            window.showToast?.('🥟 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
-        }, 180);
+        steamer.addEventListener('click', () => {
+            if (Math.abs(currentX) < 15 && Math.abs(currentY) < 15) {
+                window.luminaMotion.playCinematicSpill();
+            }
+        });
     }
 
-    // 8) Petalyx-style Interactive 3-Atmospheres Loop Accordion
+    // 10) Petalyx-style Interactive 3-Atmospheres Loop Accordion
     function initLoopAccordion() {
         const track = document.getElementById('loopTrack');
         if (!track) return;
@@ -369,7 +551,7 @@
         });
     }
 
-    // 9) Zero-Cost Stats Counters
+    // 11) Zero-Cost Stats Counters
     function initStatsObserver() {
         const statEls = document.querySelectorAll('.stat-counter');
         if (!statEls.length || !('IntersectionObserver' in window)) return;
@@ -407,7 +589,7 @@
         statEls.forEach((el) => observer.observe(el));
     }
 
-    // 10) Smooth In-Page Anchor Links
+    // 12) Smooth In-Page Anchor Links
     function initAnchorSmoothScroll() {
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
             anchor.addEventListener('click', function (e) {
@@ -423,82 +605,19 @@
         });
     }
 
-    // 11) Dynamic Section Background Color Morphing (Smooth Bezier Morph on Scroll)
-    function initBackgroundColorMorph() {
-        const sections = document.querySelectorAll('section[data-bg-color]');
-        if (!sections.length || !('IntersectionObserver' in window)) return;
-
-        let activeColor = '';
-        const observer = new IntersectionObserver((entries) => {
-            let bestEntry = null;
-            let maxRatio = 0;
-
-            entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-                    maxRatio = entry.intersectionRatio;
-                    bestEntry = entry;
-                }
-            });
-
-            if (bestEntry && maxRatio > 0.18) {
-                const targetColor = bestEntry.target.getAttribute('data-bg-color');
-                if (targetColor && targetColor !== activeColor) {
-                    activeColor = targetColor;
-                    document.body.style.backgroundColor = targetColor;
-                }
-            }
-        }, {
-            threshold: [0.15, 0.35, 0.55, 0.75],
-            rootMargin: '-10% 0px -10% 0px'
-        });
-
-        sections.forEach((sec) => observer.observe(sec));
-    }
-
-    // 12) Bind Event Listeners
-    if (steamer) {
-        steamer.addEventListener('dragstart', (e) => e.preventDefault());
-
-        steamer.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            startDrag(e.clientX, e.clientY);
-        });
-        window.addEventListener('mousemove', (e) => onDrag(e.clientX, e.clientY));
-        window.addEventListener('mouseup', () => endDrag());
-
-        steamer.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 1) {
-                startDrag(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
-        window.addEventListener('touchmove', (e) => {
-            if (isDragging && e.touches.length === 1) {
-                onDrag(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => endDrag());
-
-        steamer.addEventListener('click', () => {
-            if (Math.abs(currentX) < 15 && Math.abs(currentY) < 15) {
-                onClickSteamer();
-            }
-        });
-    }
-
-    window.addEventListener('scroll', onNativeScroll, { passive: true });
-
     // 13) Bootstrap on DOMContentLoaded
     function init() {
         initWordSplit();
         initPetals();
-        initGlass();
         initSpatialTilt();
+        initNavbarManager();
+        initPinnedSpillTrigger();
         initLoopAccordion();
         initStatsObserver();
         initAnchorSmoothScroll();
-        initBackgroundColorMorph();
+
+        // Initial State
+        applySpillTransform(0);
     }
 
     if (document.readyState === 'loading') {

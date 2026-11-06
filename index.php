@@ -60,20 +60,22 @@ include __DIR__ . '/includes/header.php';
             <div class="editorial-pricing flex items-center gap-4 mt-5">
                 <div class="price-callout text-white font-bold text-3xl font-heading drop-shadow-sm">$16.50</div>
                 <div class="text-[11px] text-amber-200/90 font-medium border-l border-white/20 pl-3">
-                    Fresh Bamboo Steamer &bull; 4 pcs<br>Aged Chinkiang Vinegar
+                    Fresh Bamboo Steamer &bull; 4 pcs<br>Aged Chinkiang Vinegar &amp; Truffle Broth
                 </div>
             </div>
-            <div class="editorial-actions flex items-center gap-3 mt-6">
-                <button onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="btn-primary bg-amber-500 hover:bg-amber-400 text-stone-900 border-none font-bold text-xs py-3 px-6 shadow-2xl">
+            <div class="editorial-actions flex flex-wrap items-center gap-3 mt-6">
+                <!-- Direct Graphic Spill Trigger Button -->
+                <button type="button" onclick="window.luminaMotion.playCinematicSpill()" class="btn-primary bg-amber-500 hover:bg-amber-400 text-stone-900 border-none font-extrabold text-xs py-3.5 px-6 shadow-2xl flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-all">
+                    <span class="text-base">💥</span>
+                    <span>Spill Steamer &amp; Reveal Café</span>
+                </button>
+                <button onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="btn-secondary bg-white/10 hover:bg-white/25 text-white border-white/30 text-xs py-3.5 px-5 backdrop-blur-md flex items-center gap-1.5">
                     <i data-lucide="plus" class="w-4 h-4"></i> Add to Order Tray
                 </button>
-                <a href="#atmospheres-loop" class="btn-secondary bg-white/10 hover:bg-white/25 text-white border-white/30 text-xs py-3 px-5 backdrop-blur-md">
-                    Explore 3 Rhythms
-                </a>
             </div>
         </div>
 
-        <!-- Centerpiece Giant Steamer Bucket (State: MAIN - Exact Equivalent of Jacket 0) -->
+        <!-- Centerpiece Giant Steamer Bucket (State: MAIN - Exact Equivalent of Reference Site Centerpiece) -->
         <div class="steamer-centerpiece-stage" id="steamerCenterpieceStage">
             <div class="steamer-glow-aura"></div>
 
@@ -85,7 +87,7 @@ include __DIR__ . '/includes/header.php';
             </div>
 
             <!-- The Massive Bamboo Steamer Basket -->
-            <div id="welcome-steamer-element" class="steamer-main-bucket state-main" title="Scroll down or drag to tilt and spill!">
+            <div id="welcome-steamer-element" class="steamer-main-bucket state-main" title="Scroll down, drag, or click to tilt and spill!">
                 <div class="steamer-bamboo-weave"></div>
                 <div class="steamer-rim-ring"></div>
                 <img src="assets/images/steamer_dumplings.jpg" alt="Artisan Bamboo Steamer Filled with Handmade Dumplings" class="w-full h-full object-cover rounded-full pointer-events-none select-none shadow-2xl">
@@ -133,7 +135,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Corner Dish Preview (State: PREVIEW - Exact Equivalent of Jacket 1 in Reference Site) -->
-        <div class="corner-dish-preview state-preview" id="cornerPreview" onclick="document.querySelector('#menu-favorites')?.scrollIntoView({behavior: 'smooth'})" title="Next Discovery: Crisp Golden Gyoza">
+        <div class="corner-dish-preview state-preview" id="cornerPreview" onclick="window.luminaMotion.jumpToStage(1)" title="Next Discovery: Crisp Golden Gyoza &bull; Click to Spill!">
             <img src="assets/images/dumpling_gyoza.jpg" alt="Next: Crisp Golden Gyoza" class="w-full h-full object-cover rounded-full shadow-2xl">
             <div class="preview-hover-tag">
                 <span class="text-[10px] font-bold text-white uppercase tracking-wider">NEXT &bull; CRISP GYOZA $14.80</span>
@@ -149,6 +151,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="text-xs font-bold text-stone-900 truncate">Truffle Xiao Long Bao</div>
                     <div class="text-[11px] text-amber-700 font-semibold">$16.50 &bull; Molten Broth</div>
                 </div>
+                <button type="button" onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="spill-add-btn" title="Add to Order Tray">+</button>
             </div>
             <!-- Flight Card 2: Crisp Golden Gyoza (Top Right) -->
             <div class="dumpling-flight-card spill-card-2">
@@ -157,6 +160,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="text-xs font-bold text-stone-900 truncate">Crisp Golden Gyoza</div>
                     <div class="text-[11px] text-amber-700 font-semibold">$14.80 &bull; Lace Skirt</div>
                 </div>
+                <button type="button" onclick="window.cafeCart.addItem({id: 18, name: 'Crisp Golden Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg'})" class="spill-add-btn" title="Add to Order Tray">+</button>
             </div>
             <!-- Flight Card 3: Sichuan Chili Wontons (Bottom Left Floor) -->
             <div class="dumpling-flight-card spill-card-3">
@@ -165,6 +169,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="text-xs font-bold text-stone-900 truncate">Sichuan Chili Wontons</div>
                     <div class="text-[11px] text-amber-700 font-semibold">$15.50 &bull; Chili Crisp</div>
                 </div>
+                <button type="button" onclick="window.cafeCart.addItem({id: 19, name: 'Sichuan Chili Oil Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg'})" class="spill-add-btn" title="Add to Order Tray">+</button>
             </div>
             <!-- Flight Card 4: Steamed Wild Shiitake Bao (Bottom Right Floor) -->
             <div class="dumpling-flight-card spill-card-4">
@@ -173,23 +178,46 @@ include __DIR__ . '/includes/header.php';
                     <div class="text-xs font-bold text-stone-900 truncate">Steamed Shiitake Bao</div>
                     <div class="text-[11px] text-amber-700 font-semibold">$13.80 &bull; Lotus Fold</div>
                 </div>
+                <button type="button" onclick="window.cafeCart.addItem({id: 20, name: 'Steamed Shiitake Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg'})" class="spill-add-btn" title="Add to Order Tray">+</button>
             </div>
             <!-- Spilling Accents: Chili Oil Saucer & Garnishes -->
             <div class="spill-sauce-dish" id="spillSauce">
                 <div class="sauce-pool"></div>
-                <span class="sauce-label">🥢 Chili Crisp Splash</span>
+                <span class="sauce-label">🥢 Toasted Sesame &amp; Chili Crisp Splash</span>
             </div>
         </div>
 
     </div>
 
+    <!-- On-Screen Graphic Motion Controller HUD -->
+    <div class="graphic-motion-hud" id="graphicMotionHud">
+        <div class="hud-pill-track">
+            <button type="button" class="hud-pill active" data-stage="0" onclick="window.luminaMotion.jumpToStage(0)">
+                <span class="hud-num">01</span>
+                <span class="hud-text">🥟 Steamer Basket</span>
+            </button>
+            <button type="button" class="hud-pill" data-stage="1" onclick="window.luminaMotion.jumpToStage(1)">
+                <span class="hud-num">02</span>
+                <span class="hud-text">💥 The Dumpling Spill</span>
+            </button>
+            <button type="button" class="hud-pill" data-stage="2" onclick="window.luminaMotion.jumpToStage(2)">
+                <span class="hud-num">03</span>
+                <span class="hud-text">☕ Full Café Platform</span>
+            </button>
+        </div>
+        <button type="button" class="hud-play-btn" onclick="window.luminaMotion.playCinematicSpill()" title="Trigger Full Graphic Spill Sequence">
+            <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+            <span>Play Graphic Motion</span>
+        </button>
+    </div>
+
     <!-- Bottom Center Scroll Spill Indicator -->
     <div class="graphic-scroll-indicator">
-        <a href="#atmospheres-loop" class="scroll-indicator-pill">
+        <button type="button" onclick="window.luminaMotion.playCinematicSpill()" class="scroll-indicator-pill">
             <span class="mouse-icon"><span class="mouse-wheel"></span></span>
-            <span class="text-[11px] font-bold text-white tracking-widest uppercase">Scroll down to spill dumplings &amp; reveal Lumina</span>
+            <span class="text-[11px] font-bold text-white tracking-widest uppercase">Scroll down or click to spill dumplings &amp; reveal Lumina</span>
             <i data-lucide="chevron-down" class="w-4 h-4 text-amber-300 animate-bounce"></i>
-        </a>
+        </button>
     </div>
 </section>
 
