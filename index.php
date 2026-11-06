@@ -6,8 +6,8 @@ $activeNav = "home";
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-// Fetch top signature food & drink items from DB
-$signatureItems = $pdo->query("SELECT * FROM menu_items WHERE id IN (1, 2, 5, 7, 8, 9, 11, 14) LIMIT 8")->fetchAll();
+// Fetch top signature food & drink items from DB including Dim Sum
+$signatureItems = $pdo->query("SELECT * FROM menu_items WHERE id IN (17, 18, 19, 20, 1, 8, 7, 11) ORDER BY CASE WHEN category = 'Dim Sum & Dumplings' THEN 1 ELSE 2 END, id ASC LIMIT 8")->fetchAll();
 
 // Fetch mini floor radar tables
 $radarTables = $pdo->query("SELECT * FROM cafe_tables ORDER BY zone ASC, table_id ASC LIMIT 8")->fetchAll();
@@ -19,7 +19,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Lumina 3D Spatial Hero Sanctuary Showcase -->
-<section id="hero-sanctuary" class="spatial-hero-stage">
+<section id="hero-sanctuary" class="spatial-hero-stage" data-bg-color="#FAF4EB">
     <!-- Floating Subtle Petals & Glass Layer -->
     <div class="petals-layer" id="welcomePetals"></div>
     <div class="hero-glass" id="welcomeGlass"></div>
@@ -31,12 +31,12 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <h1 id="welcomeTitle" class="split font-heading text-4xl sm:text-5xl lg:text-7xl text-stone-900 font-extrabold tracking-tight leading-[1.08]">
-            Where Good Food, <br class="hidden sm:inline">
+            Where Artisan Dim Sum, <br class="hidden sm:inline">
             Inspired Work & <span class="text-amber-700 italic">Natural Light</span> Meet.
         </h1>
 
         <p class="text-stone-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Step into a sunlit sanctuary crafted for your entire day. Savor stone-baked sourdough brunches, handmade truffle pastas, and single-origin coffee with 1Gbps fiber Wi-Fi and power outlets at every seat.
+            Step into a sunlit sanctuary crafted for your entire day. Savor handcrafted truffle xiao long bao, stone-baked sourdough brunches, and single-origin coffee with 1Gbps fiber Wi-Fi and power outlets at every seat.
         </p>
 
         <div class="flex flex-wrap items-center justify-center gap-3.5 pt-1">
@@ -46,7 +46,7 @@ include __DIR__ . '/includes/header.php';
             </a>
             <a href="menu.php" class="btn-secondary text-sm py-3 px-6">
                 <i data-lucide="utensils" class="w-4 h-4"></i>
-                Food & Drink Menu (16+)
+                Dim Sum & Kitchen Menu (20+)
             </a>
             <a href="dashboard.php" class="btn-secondary text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-sm py-3 px-6">
                 <i data-lucide="radar" class="w-4 h-4"></i>
@@ -69,65 +69,120 @@ include __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <!-- 3D Spatial Interactive Showcase Constellation -->
-    <div class="spatial-constellation" id="spatialConstellation">
-        <!-- Floating Food Card 1: Top-Left (Handcrafted Truffle Pappardelle) -->
-        <div class="spatial-card spatial-card-tl" data-depth="0.6">
-            <img src="assets/images/pasta.jpg" alt="Truffle Pappardelle" class="spatial-thumb shadow-sm">
-            <div class="text-left">
-                <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-bold text-stone-900">Truffle Pappardelle</span>
-                    <span class="text-amber-700 font-bold text-xs">$18.50</span>
+    <!-- 3D Spatial Interactive Showcase: Bamboo Steamer & Dynamic Dumpling Spill Stage -->
+    <div class="spatial-constellation steamer-spill-stage" id="spatialConstellation">
+        
+        <!-- Centerpiece Artisan Bamboo Steamer Basket -->
+        <div class="steamer-bucket-stage" id="steamerStage">
+            <div class="steamer-aura-glow"></div>
+            
+            <!-- Rising Delicate Culinary Steam Wisps -->
+            <div class="steamer-steam" id="steamerSteam">
+                <span class="steam-wisp wisp-1"></span>
+                <span class="steam-wisp wisp-2"></span>
+                <span class="steam-wisp wisp-3"></span>
+            </div>
+
+            <!-- The Bamboo Steamer Basket Container (Tilted on Scroll) -->
+            <div id="welcome-steamer-element" class="steamer-basket" title="Scroll down or drag to tilt and spill!">
+                <div class="steamer-rim-ring"></div>
+                <img src="assets/images/steamer_dumplings.jpg" alt="Artisan Bamboo Steamer Filled with Handmade Dumplings" class="w-full h-full object-cover rounded-full pointer-events-none select-none shadow-2xl">
+                <!-- Bamboo Clasp Badge -->
+                <div class="steamer-center-badge">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full border border-amber-300 shadow-sm backdrop-blur-sm">
+                        🥟 Chef's Steamer
+                    </span>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium">Handmade pasta &bull; Wild mushrooms</div>
+            </div>
+
+            <!-- Steamer Lid (Slides/flips back dynamically as basket spills) -->
+            <div id="steamer-lid-element" class="steamer-lid">
+                <div class="steamer-lid-handle"></div>
             </div>
         </div>
 
-        <!-- Floating Food Card 2: Top-Right (Heirloom Avocado Sourdough) -->
-        <div class="spatial-card spatial-card-tr" data-depth="0.8">
-            <img src="assets/images/hero-dish.jpg" alt="Heirloom Avocado Sourdough" class="spatial-thumb shadow-sm">
-            <div class="text-left">
-                <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-bold text-stone-900">Heirloom Avocado Toast</span>
-                    <span class="text-amber-700 font-bold text-xs">$16.00</span>
+        <!-- 4 Spilling Dumpling Flight Cards (3D Dynamic Trajectory Paths on Scroll) -->
+        <!-- Dumpling Flight Card 1: Top-Left (Truffle Xiao Long Bao) -->
+        <div class="dumpling-flight-card dumpling-card-1" data-dish="xiao-long-bao" data-depth="0.7">
+            <img src="assets/images/dumpling_xiao_long_bao.jpg" alt="Truffle Xiao Long Bao" class="dumpling-thumb shadow-sm">
+            <div class="text-left flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-stone-900 truncate">Truffle Xiao Long Bao</span>
+                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$16.50</span>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium">Whipped feta &bull; Poached farm egg</div>
+                <div class="text-[11px] text-stone-500 font-medium truncate">Molten truffle broth &bull; Chinkiang vinegar</div>
             </div>
+            <button onclick="window.cafeCart.addItem({id: 17, name: 'Truffle Xiao Long Bao', price: 16.50, image: 'assets/images/dumpling_xiao_long_bao.jpg'})" class="spill-add-btn" title="Add to Tray">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
         </div>
 
-        <!-- Centerpiece Artisan Coffee Cup -->
-        <div class="spatial-cup-stage" id="cupStage">
-            <div class="cup-aura-glow"></div>
-            <div id="welcome-cup-element" class="spatial-cup" title="Drag to tilt or move">
-                <img src="assets/images/welcome_cup.jpg" alt="Artisan Lumina Coffee Cup" class="w-full h-full object-contain rounded-full shadow-2xl pointer-events-none select-none">
+        <!-- Dumpling Flight Card 2: Top-Right (Crisp Golden Pan-Fried Gyoza) -->
+        <div class="dumpling-flight-card dumpling-card-2" data-dish="golden-gyoza" data-depth="0.85">
+            <img src="assets/images/dumpling_gyoza.jpg" alt="Crisp Golden Pan-Fried Gyoza" class="dumpling-thumb shadow-sm">
+            <div class="text-left flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-stone-900 truncate">Crisp Golden Gyoza</span>
+                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$14.80</span>
+                </div>
+                <div class="text-[11px] text-stone-500 font-medium truncate">Feathered crisp skirt &bull; Chili crisp</div>
             </div>
+            <button onclick="window.cafeCart.addItem({id: 18, name: 'Crisp Golden Pan-Fried Gyoza', price: 14.80, image: 'assets/images/dumpling_gyoza.jpg'})" class="spill-add-btn" title="Add to Tray">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
         </div>
 
-        <!-- Floating Amenity Card 3: Bottom-Left (1 Gbps Fiber & Power Sockets) -->
-        <div class="spatial-card spatial-card-bl" data-depth="0.7">
-            <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="wifi" class="w-6 h-6"></i>
-            </div>
-            <div class="text-left">
-                <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-xs font-bold text-stone-900">1 Gbps Dedicated Fiber</span>
+        <!-- Dumpling Flight Card 3: Bottom-Left (Sichuan Chili Oil Prawn Wontons) -->
+        <div class="dumpling-flight-card dumpling-card-3" data-dish="chili-wontons" data-depth="0.65">
+            <img src="assets/images/dumpling_wontons.jpg" alt="Sichuan Chili Oil Prawn Wontons" class="dumpling-thumb shadow-sm">
+            <div class="text-left flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-stone-900 truncate">Sichuan Chili Wontons</span>
+                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$15.50</span>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium">Power sockets at every single desk</div>
+                <div class="text-[11px] text-stone-500 font-medium truncate">Wild tiger prawn &bull; House chili oil</div>
             </div>
+            <button onclick="window.cafeCart.addItem({id: 19, name: 'Sichuan Chili Oil Prawn Wontons', price: 15.50, image: 'assets/images/dumpling_wontons.jpg'})" class="spill-add-btn" title="Add to Tray">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
         </div>
 
-        <!-- Floating Food Card 4: Bottom-Right (Artisan Pastrami Melt) -->
-        <div class="spatial-card spatial-card-br" data-depth="0.9">
-            <img src="assets/images/pastrami.jpg" alt="Artisan Pastrami Melt" class="spatial-thumb shadow-sm">
-            <div class="text-left">
-                <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-bold text-stone-900">Pastrami & Aged Gruyère</span>
-                    <span class="text-amber-700 font-bold text-xs">$17.00</span>
+        <!-- Dumpling Flight Card 4: Bottom-Right (Steamed Wild Shiitake & Truffle Bao) -->
+        <div class="dumpling-flight-card dumpling-card-4" data-dish="truffle-bao" data-depth="0.9">
+            <img src="assets/images/dumpling_bao.jpg" alt="Steamed Wild Shiitake & Truffle Bao" class="dumpling-thumb shadow-sm">
+            <div class="text-left flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-stone-900 truncate">Steamed Shiitake Bao</span>
+                    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 flex-shrink-0">$13.80</span>
                 </div>
-                <div class="text-[11px] text-stone-500 font-medium">Stone oven focaccia &bull; Honey Dijon</div>
+                <div class="text-[11px] text-stone-500 font-medium truncate">Pillowy lotus fold &bull; Forest shiitake</div>
             </div>
+            <button onclick="window.cafeCart.addItem({id: 20, name: 'Steamed Wild Shiitake & Truffle Bao', price: 13.80, image: 'assets/images/dumpling_bao.jpg'})" class="spill-add-btn" title="Add to Tray">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
         </div>
+
+        <!-- Spilling Accents & Debris (Sauce Ramekin, Sesame, Scallions) -->
+        <div class="spill-sauce-dish" id="spillSauce" title="Chili Crisp & Black Vinegar">
+            <div class="sauce-pool"></div>
+            <span class="sauce-label">🥢 House Chili Oil Dip</span>
+        </div>
+        <div class="spill-garnish-cluster" id="spillGarnish">
+            <span class="garnish-fleck fleck-1"></span>
+            <span class="garnish-fleck fleck-2"></span>
+            <span class="garnish-fleck fleck-3"></span>
+            <span class="garnish-fleck fleck-4"></span>
+        </div>
+    </div>
+
+    <!-- Scroll Spill Prompt Hint Pill -->
+    <div class="relative z-20 pt-2 flex flex-col items-center justify-center">
+        <a href="#atmospheres-loop" class="steamer-scroll-hint group">
+            <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                <i data-lucide="chevrons-down" class="w-4 h-4 text-amber-600 animate-bounce"></i>
+                Scroll down to spill dumplings & uncover Lumina sanctuary
+            </span>
+        </a>
     </div>
 
     <!-- Live Rolling Stats Row -->
@@ -138,6 +193,16 @@ include __DIR__ . '/includes/header.php';
         </div>
         <div>
             <div class="stat-counter font-heading text-3xl font-extrabold text-amber-700" data-to="100" data-dec="0" data-suf="%">100%</div>
+            <div class="text-xs text-stone-500 font-medium mt-1">Power Sockets at Desks</div>
+        </div>
+        <div>
+            <div class="stat-counter font-heading text-3xl font-extrabold text-emerald-700" data-to="20" data-dec="0" data-suf="+ Dishes">20+ Dishes</div>
+            <div class="text-xs text-stone-500 font-medium mt-1">Dim Sum, Brunch & Mains</div>
+        </div>
+        <div>
+            <div class="stat-counter font-heading text-3xl font-extrabold text-stone-900" data-to="4" data-dec="0" data-suf=" Zones">4 Zones</div>
+            <div class="text-xs text-stone-500 font-medium mt-1">Skylight, Patio, Study, Bar</div>
+        </div>
             <div class="text-xs text-stone-500 font-medium mt-1">Power Sockets at Desks</div>
         </div>
         <div>
@@ -152,7 +217,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Petalyx-style Interactive 3-Rhythms Loop Accordion -->
-<section id="atmospheres-loop" class="loop-accordion py-20 bg-[#FAF8F5]">
+<section id="atmospheres-loop" class="loop-accordion py-20 bg-transparent" data-bg-color="#FFFDF8">
     <div class="container max-w-6xl mx-auto space-y-10 px-4">
         <div class="text-center max-w-2xl mx-auto space-y-3">
             <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.25em] block">Designed for Your Day</span>
@@ -223,7 +288,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Apple-Style Interactive Scrollytelling Canvas Section -->
-<section id="scrolly-studio" class="relative">
+<section id="scrolly-studio" class="relative" data-bg-color="#F4F7F2">
     <div class="text-center max-w-xl mx-auto py-10 px-4 space-y-2">
         <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.25em] block">Interactive Scrollytelling Studio</span>
         <h2 class="font-heading text-3xl sm:text-4xl text-stone-900 font-bold">The Anatomy of Our Signature Dish</h2>
@@ -305,7 +370,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Cafe Atmosphere & Spaces Showcase -->
-<section id="atmospheres" class="py-20 bg-stone-100/70 border-y border-stone-200">
+<section id="atmospheres" class="py-20 bg-transparent border-y border-stone-200/70" data-bg-color="#FAF8F5">
     <div class="container space-y-12">
         <div class="text-center max-w-2xl mx-auto space-y-3">
             <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.2em] block">Designed for Your Life</span>
@@ -418,7 +483,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Interactive "Curate Your Visit" Sanctuary Experience Builder -->
-<section id="curate-experience" class="py-16 bg-[#FFFDF9] border-b border-stone-200">
+<section id="curate-experience" class="py-16 bg-transparent border-b border-stone-200/70" data-bg-color="#FFFDF9">
     <div class="container space-y-10">
         <div class="text-center max-w-2xl mx-auto space-y-2">
             <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.2em] block">Interactive Concierge</span>
@@ -473,18 +538,18 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Featured Food & Culinary Highlights with Interactive Filtering -->
-<section id="menu-favorites" class="py-20">
+<section id="menu-favorites" class="py-20 bg-transparent" data-bg-color="#FFFFFF">
     <div class="container space-y-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.2em] block">From The Kitchen</span>
                 <h2 class="font-heading text-3xl sm:text-4xl text-stone-900 font-bold">Chef-Crafted Culinary Favorites</h2>
                 <p class="text-stone-600 text-sm max-w-xl">
-                    Every dish is prepared from scratch using 36-hr fermented sourdough, handmade pasta, and farm-fresh seasonal ingredients. Filter below or tap "Chef Notes" to inspect pairings.
+                    Every dish is prepared from scratch using steaming bamboo baskets, 36-hr fermented sourdough, handmade pasta, and farm-fresh seasonal ingredients. Filter below or tap "Chef Notes" to inspect pairings.
                 </p>
             </div>
             <a href="menu.php" class="btn-secondary">
-                View All 16+ Dishes & Drinks
+                View All 20+ Dishes & Drinks
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
@@ -494,6 +559,10 @@ include __DIR__ . '/includes/header.php';
             <button class="menu-fav-filter-btn filter-pill active bg-amber-600 text-white" onclick="window.filterMenuFavorites('all', this)">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                 All Chef Creations
+            </button>
+            <button class="menu-fav-filter-btn filter-pill" onclick="window.filterMenuFavorites('Dim Sum', this)">
+                <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                Artisan Dim Sum
             </button>
             <button class="menu-fav-filter-btn filter-pill" onclick="window.filterMenuFavorites('Brunch', this)">
                 <i data-lucide="sun" class="w-3.5 h-3.5"></i>
@@ -582,7 +651,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Lumina Work & Dining Interactive Benchmark Hub -->
-<section class="py-20 bg-white border-y border-stone-200">
+<section id="quality-benchmarks" class="py-20 bg-transparent border-y border-stone-200/70" data-bg-color="#F8F9FA">
     <div class="container space-y-12">
         <div class="text-center max-w-2xl mx-auto space-y-3">
             <span class="text-xs font-bold text-amber-700 uppercase tracking-[0.2em] block">The Everyday Sanctuary</span>
@@ -770,7 +839,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Interactive Live Seating Radar Floor Grid -->
-<section id="radar-teaser" class="py-20 bg-gradient-to-r from-amber-50/70 via-stone-50 to-emerald-50/70 border-b border-stone-200">
+<section id="radar-teaser" class="py-20 bg-transparent border-b border-stone-200/70" data-bg-color="#F6EFE7">
     <div class="container space-y-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-2">
@@ -868,7 +937,7 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Guest Acclaim & Interactive Testimonials -->
-<section class="py-20">
+<section id="reviews-section" class="py-20 bg-transparent" data-bg-color="#FDFBF7">
     <div class="container space-y-10">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="space-y-2">

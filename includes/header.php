@@ -61,7 +61,7 @@ if (!isset($activeNav)) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-[#FAF8F5] text-stone-900 min-h-screen flex flex-col justify-between">
+<body class="text-stone-900 min-h-screen flex flex-col justify-between">
     <!-- Top Announcement Bar -->
     <div class="bg-stone-900 text-stone-200 py-2 px-4 text-xs text-center font-medium flex items-center justify-center gap-6 hidden sm:flex">
         <span class="flex items-center gap-2 text-emerald-400">

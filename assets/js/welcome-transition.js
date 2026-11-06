@@ -155,12 +155,17 @@
         requestAnimationFrame(step);
     }
 
-    // 6) The Bloom & Part Spatial Scroll Transition (Fully Reversible)
-    const cup = document.getElementById('welcome-cup-element');
-    const cardTL = document.querySelector('.spatial-card-tl');
-    const cardTR = document.querySelector('.spatial-card-tr');
-    const cardBL = document.querySelector('.spatial-card-bl');
-    const cardBR = document.querySelector('.spatial-card-br');
+    // 6) The Bamboo Steamer & Dynamic Dumpling Spill Spatial Transition (Fully Reversible)
+    const steamer = document.getElementById('welcome-steamer-element') || document.getElementById('welcome-cup-element');
+    const lid = document.getElementById('steamer-lid-element');
+    const steam = document.getElementById('steamerSteam');
+    const card1 = document.querySelector('.dumpling-card-1') || document.querySelector('.spatial-card-tl');
+    const card2 = document.querySelector('.dumpling-card-2') || document.querySelector('.spatial-card-tr');
+    const card3 = document.querySelector('.dumpling-card-3') || document.querySelector('.spatial-card-bl');
+    const card4 = document.querySelector('.dumpling-card-4') || document.querySelector('.spatial-card-br');
+    const sauce = document.getElementById('spillSauce');
+    const garnish = document.getElementById('spillGarnish');
+    const hint = document.querySelector('.steamer-scroll-hint');
     const targetSection = document.getElementById('atmospheres-loop');
 
     let isDragging = false;
@@ -171,50 +176,104 @@
     let ticking = false;
 
     function updateScrollMotion() {
-        if (isDragging || !cup) {
+        if (isDragging || !steamer) {
             ticking = false;
             return;
         }
 
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const maxScroll = 650;
+        const maxScroll = 620;
         const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
 
         if (progress > 0) {
-            // Central cup lifts gracefully
-            const translateY = -progress * 220;
-            const scale = 1 + progress * 0.12;
-            cup.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-            cup.style.opacity = Math.max(0, 1 - Math.pow(progress, 1.2));
+            // Central Bamboo Steamer Tilts Forward to Spill
+            const tiltX = 44 * progress;
+            const tiltZ = -14 * progress;
+            const posY = progress * 190;
+            const scale = 1 + progress * 0.14;
+            const op = Math.max(0, 1 - Math.pow(progress, 1.35));
 
-            // Floating food & work cards bloom and part outward like a luxury gate
-            const cardOpacity = Math.max(0, 1 - progress * 1.35);
+            steamer.style.transform = `translate3d(0, ${posY}px, 0) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) scale(${scale})`;
+            steamer.style.opacity = op;
 
-            if (cardTL) {
-                cardTL.style.transform = `translate3d(${-progress * 160}px, ${-progress * 80}px, 40px) rotate(${-progress * 10}deg)`;
-                cardTL.style.opacity = cardOpacity;
+            // Bamboo Lid flips and slides back dynamically
+            if (lid) {
+                lid.style.transform = `translate3d(${progress * 95}px, ${-progress * 135}px, 70px) rotate(${progress * 40}deg) rotateX(${progress * 25}deg)`;
+                lid.style.opacity = Math.max(0, 1 - progress * 1.6);
             }
-            if (cardTR) {
-                cardTR.style.transform = `translate3d(${progress * 160}px, ${-progress * 80}px, 60px) rotate(${progress * 10}deg)`;
-                cardTR.style.opacity = cardOpacity;
+
+            // Fragrant Steam Wisps disperse
+            if (steam) {
+                steam.style.opacity = Math.max(0, 1 - progress * 2.2);
             }
-            if (cardBL) {
-                cardBL.style.transform = `translate3d(${-progress * 140}px, ${progress * 60}px, 50px) rotate(${-progress * 6}deg)`;
-                cardBL.style.opacity = cardOpacity;
+
+            // 4 Dumpling Flight Cards Spill Across Screen Margins (Ballistic 3D Flight Paths)
+            const cardOpacity = Math.max(0, 1 - Math.pow(progress, 1.35));
+
+            if (card1) {
+                // Truffle Xiao Long Bao: Launches towards top-left
+                const dx1 = -progress * 260;
+                const dy1 = -progress * 130 + (progress * progress * 35);
+                const rot1 = -progress * 18;
+                card1.style.transform = `translate3d(${dx1}px, ${dy1}px, 80px) rotate(${rot1}deg) scale(${1 + progress * 0.10})`;
+                card1.style.opacity = cardOpacity;
             }
-            if (cardBR) {
-                cardBR.style.transform = `translate3d(${progress * 140}px, ${progress * 60}px, 70px) rotate(${progress * 6}deg)`;
-                cardBR.style.opacity = cardOpacity;
+
+            if (card2) {
+                // Crisp Golden Gyoza: Bursts towards top-right
+                const dx2 = progress * 270;
+                const dy2 = -progress * 120 + (progress * progress * 30);
+                const rot2 = progress * 18;
+                card2.style.transform = `translate3d(${dx2}px, ${dy2}px, 90px) rotate(${rot2}deg) scale(${1 + progress * 0.10})`;
+                card2.style.opacity = cardOpacity;
+            }
+
+            if (card3) {
+                // Sichuan Chili Wontons: Tumbles across floor bottom-left
+                const dx3 = -progress * 230;
+                const dy3 = progress * 150;
+                const rot3 = -progress * 12;
+                card3.style.transform = `translate3d(${dx3}px, ${dy3}px, 60px) rotate(${rot3}deg) scale(${1 + progress * 0.08})`;
+                card3.style.opacity = cardOpacity;
+            }
+
+            if (card4) {
+                // Steamed Shiitake Bao: Rolls across floor bottom-right
+                const dx4 = progress * 240;
+                const dy4 = progress * 160;
+                const rot4 = progress * 14;
+                card4.style.transform = `translate3d(${dx4}px, ${dy4}px, 70px) rotate(${rot4}deg) scale(${1 + progress * 0.08})`;
+                card4.style.opacity = cardOpacity;
+            }
+
+            // Spilling Accents: Chili Oil Dish & Garnishes
+            if (sauce) {
+                sauce.style.transform = `translate3d(${-progress * 150}px, ${progress * 90}px, 30px)`;
+                sauce.style.opacity = Math.max(0, 1 - progress * 1.5);
+            }
+            if (garnish) {
+                garnish.style.transform = `scale(${1 + progress * 0.4})`;
+                garnish.style.opacity = Math.max(0, 1 - progress * 1.6);
+            }
+            if (hint) {
+                hint.style.opacity = Math.max(0, 1 - progress * 2.5);
             }
         } else {
-            // 100% Restored when at the top
-            cup.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            cup.style.opacity = '1';
+            // 100% Fully Restored when user scrolls back to the top
+            steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateZ(0deg) scale(1)';
+            steamer.style.opacity = '1';
 
-            if (cardTL) { cardTL.style.transform = 'translate3d(0, 0, 40px)'; cardTL.style.opacity = '1'; }
-            if (cardTR) { cardTR.style.transform = 'translate3d(0, 0, 60px)'; cardTR.style.opacity = '1'; }
-            if (cardBL) { cardBL.style.transform = 'translate3d(0, 0, 50px)'; cardBL.style.opacity = '1'; }
-            if (cardBR) { cardBR.style.transform = 'translate3d(0, 0, 70px)'; cardBR.style.opacity = '1'; }
+            if (lid) { lid.style.transform = 'none'; lid.style.opacity = '1'; }
+            if (steam) { steam.style.opacity = '1'; }
+
+            if (card1) { card1.style.transform = 'translate3d(0, 0, 50px) rotate(-3deg)'; card1.style.opacity = '1'; }
+            if (card2) { card2.style.transform = 'translate3d(0, 0, 65px) rotate(3deg)'; card2.style.opacity = '1'; }
+            if (card3) { card3.style.transform = 'translate3d(0, 0, 45px) rotate(-2deg)'; card3.style.opacity = '1'; }
+            if (card4) { card4.style.transform = 'translate3d(0, 0, 70px) rotate(2deg)'; card4.style.opacity = '1'; }
+
+            if (sauce) { sauce.style.transform = 'none'; sauce.style.opacity = '1'; }
+            if (garnish) { garnish.style.transform = 'none'; garnish.style.opacity = '1'; }
+            if (hint) { hint.style.opacity = '1'; }
         }
 
         ticking = false;
@@ -229,55 +288,59 @@
 
     // 7) Interactive Drag & Spring Physics
     function startDrag(x, y) {
+        if (!steamer) return;
         isDragging = true;
         startX = x - currentX;
         startY = y - currentY;
-        cup.style.transition = 'none';
-        cup.style.cursor = 'grabbing';
+        steamer.style.transition = 'none';
+        steamer.style.cursor = 'grabbing';
     }
 
     function onDrag(x, y) {
-        if (!isDragging) return;
+        if (!isDragging || !steamer) return;
 
         currentX = x - startX;
         currentY = y - startY;
 
         const distance = Math.hypot(currentX, currentY);
-        const rotation = Math.min(18, Math.max(-18, currentX * 0.07));
-        const scale = Math.max(0.92, 1 - distance * 0.0008);
+        const rotX = -currentY * 0.12;
+        const rotY = currentX * 0.14;
+        const rotZ = currentX * 0.05;
+        const scale = Math.max(0.92, 1 - distance * 0.0007);
 
-        cup.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${rotation}deg) scale(${scale})`;
+        steamer.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale})`;
 
-        if (distance > 110 || currentY < -70) {
+        if (distance > 110 || currentY > 80 || currentY < -70) {
             endDrag();
             const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
             gentleScrollTo(targetY, 1050);
-            window.showToast?.('Welcome to Lumina! Explore our 3 rhythms & dining below.', 'info');
+            window.showToast?.('🥢 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
         }
     }
 
     function endDrag() {
-        if (!isDragging) return;
+        if (!isDragging || !steamer) return;
         isDragging = false;
-        cup.style.cursor = 'grab';
+        steamer.style.cursor = 'grab';
 
-        cup.style.transition = 'transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        cup.style.transform = 'translate3d(0, 0, 0) rotate(0deg) scale(1)';
+        steamer.style.transition = 'transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        steamer.style.transform = 'translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1)';
         currentX = 0;
         currentY = 0;
     }
 
-    function onClickCup() {
-        cup.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
-        cup.style.transform = 'scale(0.96)';
+    function onClickSteamer() {
+        if (!steamer) return;
+        steamer.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+        steamer.style.transform = 'scale(0.96) rotateX(8deg)';
 
         setTimeout(() => {
-            cup.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            cup.style.transform = 'scale(1)';
+            steamer.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            steamer.style.transform = 'scale(1) rotateX(0deg)';
 
             const targetY = targetSection ? targetSection.offsetTop - 20 : window.innerHeight * 0.85;
             gentleScrollTo(targetY, 1050);
-            window.showToast?.('Welcome to Lumina! Explore our 3 rhythms & dining below.', 'info');
+            window.showToast?.('🥢 Steamer Uncovered! Welcome to Lumina\'s all-day kitchen & dining sanctuary.', 'info');
         }, 180);
     }
 
@@ -352,18 +415,50 @@
         });
     }
 
-    // 11) Bind Event Listeners
-    if (cup) {
-        cup.addEventListener('dragstart', (e) => e.preventDefault());
+    // 11) Dynamic Section Background Color Morphing (Smooth Bezier Morph on Scroll)
+    function initBackgroundColorMorph() {
+        const sections = document.querySelectorAll('section[data-bg-color]');
+        if (!sections.length || !('IntersectionObserver' in window)) return;
 
-        cup.addEventListener('mousedown', (e) => {
+        let activeColor = '';
+        const observer = new IntersectionObserver((entries) => {
+            let bestEntry = null;
+            let maxRatio = 0;
+
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                    maxRatio = entry.intersectionRatio;
+                    bestEntry = entry;
+                }
+            });
+
+            if (bestEntry && maxRatio > 0.18) {
+                const targetColor = bestEntry.target.getAttribute('data-bg-color');
+                if (targetColor && targetColor !== activeColor) {
+                    activeColor = targetColor;
+                    document.body.style.backgroundColor = targetColor;
+                }
+            }
+        }, {
+            threshold: [0.15, 0.35, 0.55, 0.75],
+            rootMargin: '-10% 0px -10% 0px'
+        });
+
+        sections.forEach((sec) => observer.observe(sec));
+    }
+
+    // 12) Bind Event Listeners
+    if (steamer) {
+        steamer.addEventListener('dragstart', (e) => e.preventDefault());
+
+        steamer.addEventListener('mousedown', (e) => {
             e.preventDefault();
             startDrag(e.clientX, e.clientY);
         });
         window.addEventListener('mousemove', (e) => onDrag(e.clientX, e.clientY));
         window.addEventListener('mouseup', () => endDrag());
 
-        cup.addEventListener('touchstart', (e) => {
+        steamer.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1) {
                 startDrag(e.touches[0].clientX, e.touches[0].clientY);
             }
@@ -377,16 +472,16 @@
 
         window.addEventListener('touchend', () => endDrag());
 
-        cup.addEventListener('click', () => {
+        steamer.addEventListener('click', () => {
             if (Math.abs(currentX) < 15 && Math.abs(currentY) < 15) {
-                onClickCup();
+                onClickSteamer();
             }
         });
     }
 
     window.addEventListener('scroll', onNativeScroll, { passive: true });
 
-    // 12) Bootstrap on DOMContentLoaded
+    // 13) Bootstrap on DOMContentLoaded
     function init() {
         initWordSplit();
         initPetals();
@@ -395,6 +490,7 @@
         initLoopAccordion();
         initStatsObserver();
         initAnchorSmoothScroll();
+        initBackgroundColorMorph();
     }
 
     if (document.readyState === 'loading') {

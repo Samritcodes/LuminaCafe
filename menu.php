@@ -9,7 +9,7 @@ require_once __DIR__ . '/includes/functions.php';
 // Fetch all menu items
 $menuItems = $pdo->query("SELECT * FROM menu_items ORDER BY id ASC")->fetchAll();
 
-$categories = ['All', 'Breakfast & Brunch', 'Sandwiches & Paninis', 'Gourmet Mains', 'Bakery & Pastries', 'Beverages'];
+$categories = ['All', 'Dim Sum & Dumplings', 'Breakfast & Brunch', 'Sandwiches & Paninis', 'Gourmet Mains', 'Bakery & Pastries', 'Beverages'];
 
 include __DIR__ . '/includes/header.php';
 ?>

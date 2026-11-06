@@ -251,6 +251,64 @@ try {
                 389
             ],
 
+            // ARTISAN DIM SUM & HANDMADE DUMPLINGS
+            [
+                'Truffle Xiao Long Bao',
+                'Dim Sum & Dumplings',
+                16.50,
+                'Steamed handmade dumplings filled with organic Berkshire pork and rich molten black summer truffle broth, served in a bamboo steamer with aged Chinkiang vinegar and ginger slivers.',
+                'assets/images/dumpling_xiao_long_bao.jpg',
+                'Chef Signature',
+                'Handmade &bull; Black Truffle',
+                '10 mins',
+                380,
+                1,
+                4.99,
+                512
+            ],
+            [
+                'Crisp Golden Pan-Fried Gyoza',
+                'Dim Sum & Dumplings',
+                14.80,
+                'Kurobuta pork and garlic chive dumplings with a delicate crisp lacy golden skirt, drizzled with toasted sesame chili crisp and micro-scallions.',
+                'assets/images/dumpling_gyoza.jpg',
+                'Crispy Skirt',
+                'House Cured &bull; Made Fresh',
+                '11 mins',
+                420,
+                1,
+                4.97,
+                380
+            ],
+            [
+                'Sichuan Chili Oil Prawn Wontons',
+                'Dim Sum & Dumplings',
+                15.50,
+                'Hand-pinched wild tiger prawn wontons swimming in a savory, aromatic house chili crisp oil with toasted garlic, roasted peanuts, and cilantro.',
+                'assets/images/dumpling_wontons.jpg',
+                'Spicy Favorite',
+                'Pescatarian &bull; House Chili Oil',
+                '9 mins',
+                360,
+                1,
+                4.96,
+                440
+            ],
+            [
+                'Steamed Wild Shiitake & Truffle Bao',
+                'Dim Sum & Dumplings',
+                13.80,
+                'Pillowy lotus-folded steamed bao buns filled with glazed wild forest shiitake mushrooms, pickled cucumbers, scallions, and hoisin truffle glaze.',
+                'assets/images/dumpling_bao.jpg',
+                'Botanical Delight',
+                'Vegetarian &bull; Vegan Option',
+                '8 mins',
+                340,
+                1,
+                4.94,
+                295
+            ],
+
             // BAKERY & SWEET DELIGHTS
             [
                 'Sicilian Pistachio Supreme Croissant',
